@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-Explore — KIIT Event Management & Registration Portal</title>
-  <meta name="description" content="Discover, explore, and register for premier collegiate hackathons, cultural festivals, tech conclaves, esports tournaments, and workshops at KIIT.">
-  <meta name="theme-color" content="#6366f1">
+  <title>Event Management — Official Campus Events Portal | KIIT University</title>
+  <meta name="description" content="Discover, explore, and register for premier collegiate hackathons, cultural festivals, tech conclaves, esports championships, and certified workshops at KIIT.">
+  <meta name="theme-color" content="#4f46e5">
   
   <!-- Favicon SVG Data URI -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
 
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -24,20 +24,24 @@
   <header class="navbar" id="topNavbar">
     <div class="container nav-container">
       <!-- Brand Logo -->
-      <a href="#hero" class="nav-brand" aria-label="K-Explore Home">
+      <a href="#hero" class="nav-brand" aria-label="Event Management Home">
         <div class="brand-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
         </div>
-        <span>K-Explore<span style="color: var(--brand-primary)">.</span></span>
+        <div class="brand-text-col">
+          <span class="brand-title">Event Management<span style="color: var(--brand-primary)">.</span></span>
+          <span class="brand-sub">KIIT University</span>
+        </div>
       </a>
 
       <!-- Desktop Nav Links -->
       <nav class="nav-links" aria-label="Main Navigation">
         <a href="#events" class="nav-link active">Explore Events</a>
         <a href="#spotlight" class="nav-link">Featured Spotlight</a>
-        <a href="#about" class="nav-link">About & Stats</a>
+        <a href="#features" class="nav-link">Portal Perks</a>
+        <a href="#venues" class="nav-link">Campus Venues</a>
         <a href="#faq" class="nav-link">FAQs</a>
       </nav>
 
@@ -69,7 +73,7 @@
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
           </svg>
-          <span>My Tickets</span>
+          <span>My Passes</span>
           <span class="tickets-btn-badge" id="myTicketsBadge">0</span>
         </button>
 
@@ -90,7 +94,8 @@
       <div class="mobile-drawer-links">
         <a href="#events" class="mobile-drawer-link">Explore Events</a>
         <a href="#spotlight" class="mobile-drawer-link">Featured Spotlight</a>
-        <a href="#about" class="mobile-drawer-link">About & Stats</a>
+        <a href="#features" class="mobile-drawer-link">Portal Perks</a>
+        <a href="#venues" class="mobile-drawer-link">Campus Venues</a>
         <a href="#faq" class="mobile-drawer-link">FAQs & Support</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: auto;">
@@ -110,15 +115,15 @@
     <div class="container hero-content">
       <div class="hero-badge">
         <span class="ping-dot" aria-hidden="true"></span>
-        <span>KIIT University Official Student Portal 2026</span>
+        <span>Official KIIT University Event Management Portal 2026</span>
       </div>
 
       <h1 class="hero-title">
-        Discover, Experience & Connect at <span class="gradient-text">K-Explore</span>
+        Discover, Experience & Lead with <span class="gradient-text">Event Management</span>
       </h1>
 
       <p class="hero-subtitle">
-        Your premier launchpad for national hackathons, star-studded cultural fests, cutting-edge AI conclaves, esports arenas, and hands-on masterclasses.
+        Your unified gateway for national hackathons, star-studded cultural fests, cutting-edge AI conclaves, esports arenas, and certified masterclasses across KIIT campuses.
       </p>
 
       <div class="hero-cta-group">
@@ -143,15 +148,15 @@
       <!-- Live Interactive Stats Counters -->
       <div class="hero-stats-grid" id="about">
         <div class="stat-item">
-          <div class="stat-value" data-target="24">24+</div>
+          <div class="stat-value" data-target="28">28+</div>
           <div class="stat-label">Active Campus Events</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value" data-target="15000">15,000+</div>
+          <div class="stat-value" data-target="18000">18,000+</div>
           <div class="stat-label">Annual Attendees</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value" data-target="500000">₹5,00,000+</div>
+          <div class="stat-value" data-target="500000">₹7,50,000+</div>
           <div class="stat-label">Prize Pool & Grants</div>
         </div>
         <div class="stat-item">
@@ -161,6 +166,25 @@
       </div>
     </div>
   </section>
+
+  <!-- ========================================================================
+       Live Campus Ticker Banner
+       ======================================================================== -->
+  <div class="campus-ticker-wrap" aria-label="Campus Announcements">
+    <div class="campus-ticker">
+      <div class="ticker-item"><span class="hot">🔥 HOT</span> <strong>HackSprint X:</strong> 36-Hour National Hackathon Registrations Live</div>
+      <div class="ticker-item"><span>⚡</span> <strong>RoboWars 2026:</strong> Arena Seats 85% Booked</div>
+      <div class="ticker-item"><span class="hot">🌟 FLAGSHIP</span> <strong>Kalliope ’26:</strong> Star Night Headliners Announced</div>
+      <div class="ticker-item"><span>🎮</span> <strong>Esports Championship:</strong> Valorant & BGMI Tournament Registration Closing Soon</div>
+      <div class="ticker-item"><span>💡</span> <strong>TEDxKIIT:</strong> Catalysts of Tomorrow Delegate Passes Available</div>
+      <div class="ticker-item"><span>🏃</span> <strong>Green Marathon:</strong> 10K & 5K Campus Fitness Run Open for All</div>
+      <!-- Duplicate for seamless looping -->
+      <div class="ticker-item"><span class="hot">🔥 HOT</span> <strong>HackSprint X:</strong> 36-Hour National Hackathon Registrations Live</div>
+      <div class="ticker-item"><span>⚡</span> <strong>RoboWars 2026:</strong> Arena Seats 85% Booked</div>
+      <div class="ticker-item"><span class="hot">🌟 FLAGSHIP</span> <strong>Kalliope ’26:</strong> Star Night Headliners Announced</div>
+      <div class="ticker-item"><span>🎮</span> <strong>Esports Championship:</strong> Valorant & BGMI Tournament Registration Closing Soon</div>
+    </div>
+  </div>
 
   <!-- ========================================================================
        Featured Spotlight Section (With Live Ticking Countdown)
@@ -179,7 +203,7 @@
       <!-- Spotlight Banner Card -->
       <article class="spotlight-card" id="spotlightCard">
         <div class="spotlight-media">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="HackSprint X Banner" class="spotlight-img" id="spotlightImg" fetchpriority="high">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="HackSprint X Banner" class="spotlight-img" id="spotlightImg" fetchpriority="high">
           <div class="spotlight-overlay">
             <div class="spotlight-media-badges">
               <span class="badge badge-featured">Flagship Conclave</span>
@@ -258,7 +282,7 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="search" id="searchInput" class="search-input" placeholder="Search by event title, venue, or keywords (e.g., AI, Hackathon, Music)..." aria-label="Search Events">
+          <input type="search" id="searchInput" class="search-input" placeholder="Search by event title, venue, or keywords (e.g., AI, Hackathon, Music, Robotics)..." aria-label="Search Events">
           <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear Search Input">✕</button>
         </div>
 
@@ -312,6 +336,108 @@
   </section>
 
   <!-- ========================================================================
+       Portal Ecosystem & Key Perks Section
+       ======================================================================== -->
+  <section class="section features-section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Seamless Infrastructure</span>
+        <h2 class="section-title">Designed for Modern Campus Life</h2>
+        <p class="section-desc">From instant QR credentials to real-time seat availability, our Event Management platform eliminates friction for students and organizers alike.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="7" y1="7" x2="7.01" y2="7"></line><line x1="17" y1="7" x2="17.01" y2="7"></line><line x1="7" y1="17" x2="7.01" y2="17"></line><line x1="17" y1="17" x2="17.01" y2="17"></line></svg>
+          </div>
+          <h3>Instant Digital Pass</h3>
+          <p>Get a verified digital boarding pass with deterministic SVG QR code and reference ID instantly upon registering.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
+          <h3>Calendar (.ics) Sync</h3>
+          <p>Download RFC-compliant calendar invites directly to your Google, Apple, or Outlook calendar with venue and timing details.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3>Live Seat Tracking</h3>
+          <p>Monitor real-time attendee counts and seat capacity bars so you never miss out on high-demand workshops and fests.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <h3>Zero Paperwork Check-in</h3>
+          <p>Show your digital pass or print as PDF. Scan-and-go access at auditorium gates and sports arenas with zero hassle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       Campus Venues Showcase
+       ======================================================================== -->
+  <section class="section" id="venues">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Iconic Venues</span>
+        <h2 class="section-title">World-Class Event Facilities</h2>
+        <p class="section-desc">Explore the state-of-the-art auditoriums, lush stadium grounds, and high-tech incubator spaces across KIIT Deemed to be University.</p>
+      </div>
+
+      <div class="venues-grid">
+        <div class="venue-card">
+          <div class="venue-media">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80" alt="Campus 6 Auditorium" class="venue-img" loading="lazy">
+          </div>
+          <div class="venue-info">
+            <h4>Campus 6 Auditorium</h4>
+            <p>1,200 capacity tier hall with Dolby acoustics and gigabit internet.</p>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-media">
+            <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80" alt="Stadium Grounds, Campus 13" class="venue-img" loading="lazy">
+          </div>
+          <div class="venue-info">
+            <h4>Central Stadium, Campus 13</h4>
+            <p>Floodlit athletic stadium hosting cultural fests and sports championships.</p>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-media">
+            <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80" alt="Chintan Convention Hall" class="venue-img" loading="lazy">
+          </div>
+          <div class="venue-info">
+            <h4>Chintan Hall, Campus 7</h4>
+            <p>Executive conclave hall tailored for robotics summits and research panels.</p>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-media">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="KIIT TBI Innovation Hub" class="venue-img" loading="lazy">
+          </div>
+          <div class="venue-info">
+            <h4>KIIT-TBI Innovation Hub</h4>
+            <p>Startup incubation complex equipped with MakerSpace and pitch arenas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
        FAQ Section
        ======================================================================== -->
   <section class="section faq-section" id="faq">
@@ -329,7 +455,7 @@
             <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="faq-answer">
-            Upon submitting the event registration form, your digital boarding pass is instantly generated with a unique Booking Reference Code and an SVG QR Code. You can print or save it as a PDF, add it directly to your calendar, or retrieve it anytime under the "My Tickets" section in the navigation bar.
+            Upon submitting the event registration form, your digital boarding pass is instantly generated with a unique Booking Reference Code and an SVG QR Code. You can print or save it as a PDF, add it directly to your calendar, or retrieve it anytime under the "My Passes" section in the navigation bar.
           </div>
         </details>
 
@@ -339,7 +465,7 @@
             <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="faq-answer">
-            Yes! Flagship events like HackSprint X, Kalliope ’26 Cultural Fest, and the Esports Championship welcome participants from colleges across India. Select "External University" in the registration form and bring your valid college ID card to the venue.
+            Yes! Flagship events like HackSprint X, Kalliope ’26 Cultural Fest, and the Esports Championship welcome participants from colleges across India. Select "Other External University" in the registration form and bring your valid college ID card to the venue.
           </div>
         </details>
 
@@ -349,7 +475,7 @@
             <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="faq-answer">
-            Yes. Simply click on the "My Tickets" button in the navigation header. You can view all your stored registrations in Local Storage, print existing passes, or cancel any registration with a single click to free up seats for other attendees.
+            Yes. Simply click on the "My Passes" button in the navigation header. You can view all your stored registrations in Local Storage, print existing passes, or cancel any registration with a single click to free up seats for other attendees.
           </div>
         </details>
 
@@ -367,6 +493,20 @@
   </section>
 
   <!-- ========================================================================
+       Newsletter Alert Bar
+       ======================================================================== -->
+  <div class="container">
+    <div class="newsletter-bar">
+      <h3>Never Miss a Campus Event</h3>
+      <p>Subscribe to weekly event alerts, flagship announcements, and priority workshop seat drops.</p>
+      <form class="newsletter-form" id="newsletterForm" onsubmit="event.preventDefault(); window.subscribeNewsletter(event);">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Enter your student email..." required>
+        <button type="submit" class="newsletter-btn">Subscribe Free</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
        Footer
        ======================================================================== -->
   <footer class="footer">
@@ -374,13 +514,13 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand-title">
-            <div class="brand-icon" style="width: 2rem; height: 2rem;" aria-hidden="true">
+            <div class="brand-icon" style="width: 2.2rem; height: 2.2rem;" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             </div>
-            <span>K-Explore Portal</span>
+            <span>Event Management</span>
           </div>
           <p class="footer-brand-desc">
-            Empowering students to connect, build, compete, and celebrate across tech, culture, arts, and athletics. Built for the KIIT community and beyond.
+            The official unified event management and registration portal of KIIT Deemed to be University. Empowering students to build, compete, showcase talent, and celebrate across 28+ state-of-the-art campuses.
           </p>
           <div class="social-links">
             <a href="#" class="social-link" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
@@ -395,7 +535,8 @@
           <ul class="footer-links-list">
             <li class="footer-link-item"><a href="#events">Upcoming Events</a></li>
             <li class="footer-link-item"><a href="#spotlight">Featured Spotlight</a></li>
-            <li class="footer-link-item"><a href="#about">Campus Statistics</a></li>
+            <li class="footer-link-item"><a href="#features">Portal Perks</a></li>
+            <li class="footer-link-item"><a href="#venues">Campus Venues</a></li>
             <li class="footer-link-item"><a href="#faq">Help & Guidelines</a></li>
           </ul>
         </div>
@@ -407,6 +548,7 @@
             <li class="footer-link-item"><a href="#events" data-category-link="cultural">Cultural & Arts</a></li>
             <li class="footer-link-item"><a href="#events" data-category-link="gaming">Esports & Gaming</a></li>
             <li class="footer-link-item"><a href="#events" data-category-link="workshops">Workshops & Conclaves</a></li>
+            <li class="footer-link-item"><a href="#events" data-category-link="sports">Sports & Athletics</a></li>
           </ul>
         </div>
 
@@ -425,7 +567,7 @@
 
       <div class="footer-bottom">
         <div>
-          © 2026 K-Explore Event Management. Designed & Developed for Web Designing Assessment.
+          © 2026 KIIT Event Management Portal. Designed & Developed for Web Designing Assessment.
         </div>
         <div style="display: flex; gap: 1rem;">
           <a href="#" style="color: var(--text-muted);">Privacy Policy</a>
@@ -644,7 +786,7 @@
               <label for="regPhone" class="form-label">
                 <span>Phone Number <span class="required">*</span></span>
               </label>
-              <span id="phone-hint" class="form-hint">10-digit mobile number</span>
+              <span id="phone-hint" class="form-hint">10-digit Indian mobile number</span>
               <input
                 type="tel"
                 id="regPhone"
@@ -712,7 +854,7 @@
                 <span>Pass Type <span class="required">*</span></span>
               </label>
               <select id="regTicketType" name="ticketType" class="form-select" required>
-                <option value="Standard Student Delegate">Standard Student Delegate (Default)</option>
+                <option value="Standard Delegate Pass">Standard Delegate Pass (Default)</option>
                 <option value="VIP Priority Access">VIP Priority Access</option>
                 <option value="Team Leader / Representative">Team Leader / Representative</option>
               </select>
@@ -782,7 +924,7 @@
           </div>
           <h3 class="confirmation-title">You're Officially Registered!</h3>
           <p class="confirmation-subtitle">
-            A confirmation has been saved to your portal. Present this pass at the gate.
+            A confirmation pass has been saved to your browser portal. Present this pass at the gate.
           </p>
         </div>
 
@@ -790,7 +932,7 @@
         <div class="ticket-wrapper" id="printableTicket">
           <!-- Ticket Header -->
           <div class="ticket-header">
-            <div class="ticket-brand">K-EXPLORE PASS</div>
+            <div class="ticket-brand">EVENT MANAGEMENT PASS</div>
             <div class="ticket-pass-type" id="ticketPassType">Standard Pass</div>
           </div>
 
@@ -838,7 +980,7 @@
             </div>
             <div class="ticket-barcode-box">
               <div class="ticket-label">Booking Reference</div>
-              <div class="ticket-booking-ref" id="ticketRefCode">KE-2026-94821</div>
+              <div class="ticket-booking-ref" id="ticketRefCode">EM-2026-94821</div>
               <svg width="140" height="28" viewBox="0 0 140 28" fill="currentColor">
                 <!-- Barcode visual pattern -->
                 <rect x="0" y="0" width="3" height="28"></rect>

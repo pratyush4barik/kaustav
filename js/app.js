@@ -1,8 +1,8 @@
 /**
- * K-Explore Events Platform
+ * KIIT Event Management Platform
  * Main Application Logic
- * Implements search, filtering, modern form validation, dialog management,
- * live countdown timers, theme switcher, ticket generation, and LocalStorage data management.
+ * Implements search, category filtering, real-time form validation, dialog management,
+ * live countdown timers, theme switcher, digital boarding pass generation, and persistent data storage.
  */
 
 import { CATEGORIES, EVENTS_DATA, getFormattedEvent } from './events-data.js';
@@ -24,11 +24,14 @@ const state = {
   theme: 'light'
 };
 
-// LocalStorage Keys
+// LocalStorage Keys (Supports backward compatibility)
 const STORAGE_KEYS = {
-  THEME: 'k_explore_theme',
-  REGISTRATIONS: 'k_explore_registrations',
-  WISHLIST: 'k_explore_wishlist'
+  THEME: 'kiit_event_mgmt_theme',
+  LEGACY_THEME: 'k_explore_theme',
+  REGISTRATIONS: 'kiit_event_mgmt_registrations',
+  LEGACY_REGISTRATIONS: 'k_explore_registrations',
+  WISHLIST: 'kiit_event_mgmt_wishlist',
+  LEGACY_WISHLIST: 'k_explore_wishlist'
 };
 
 // ============================================================================
@@ -49,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function loadSavedState() {
   // Load Theme
-  const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
+  const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || localStorage.getItem(STORAGE_KEYS.LEGACY_THEME);
   if (savedTheme) {
     state.theme = savedTheme;
   } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -58,7 +61,7 @@ function loadSavedState() {
 
   // Load Registrations
   try {
-    const savedRegs = localStorage.getItem(STORAGE_KEYS.REGISTRATIONS);
+    const savedRegs = localStorage.getItem(STORAGE_KEYS.REGISTRATIONS) || localStorage.getItem(STORAGE_KEYS.LEGACY_REGISTRATIONS);
     if (savedRegs) {
       state.registrations = JSON.parse(savedRegs);
     }
@@ -69,7 +72,7 @@ function loadSavedState() {
 
   // Load Wishlist
   try {
-    const savedWish = localStorage.getItem(STORAGE_KEYS.WISHLIST);
+    const savedWish = localStorage.getItem(STORAGE_KEYS.WISHLIST) || localStorage.getItem(STORAGE_KEYS.LEGACY_WISHLIST);
     if (savedWish) {
       state.wishlist = new Set(JSON.parse(savedWish));
     }
@@ -90,7 +93,7 @@ function toggleTheme() {
   state.theme = state.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', state.theme);
   localStorage.setItem(STORAGE_KEYS.THEME, state.theme);
-  showToast(`Theme switched to ${state.theme === 'dark' ? 'Dark' : 'Light'} Mode`, 'info');
+  showToast(`Switched to ${state.theme === 'dark' ? 'Dark' : 'Light'} Mode`, 'info');
 }
 
 // ============================================================================
@@ -113,7 +116,6 @@ function formatTwoDigits(n) {
 }
 
 function startGlobalCountdowns() {
-  // Update spotlight countdown and modal countdown every second
   setInterval(() => {
     // 1. Spotlight Event
     const spotlightEvent = state.events.find(e => e.featured) || state.events[0];
@@ -378,10 +380,10 @@ function toggleWishlist(eventId) {
 
   if (state.wishlist.has(eventId)) {
     state.wishlist.delete(eventId);
-    showToast(`Removed "${event.title.substring(0, 24)}..." from saved events`, 'info');
+    showToast(`Removed "${event.title.substring(0, 22)}..." from saved events`, 'info');
   } else {
     state.wishlist.add(eventId);
-    showToast(`Saved "${event.title.substring(0, 24)}..." to your wishlist! ❤️`, 'success');
+    showToast(`Saved "${event.title.substring(0, 22)}..." to your wishlist! ❤️`, 'success');
   }
 
   localStorage.setItem(STORAGE_KEYS.WISHLIST, JSON.stringify(Array.from(state.wishlist)));
@@ -455,7 +457,7 @@ function openEventDetailsModal(eventId) {
 }
 
 // ============================================================================
-// MODAL 2: Interactive Registration Modal & JavaScript Form Validation
+// MODAL 2: Interactive Registration Modal & Form Validation
 // ============================================================================
 function populateRegistrationEventDropdown() {
   const select = document.getElementById('regSelectedEvent');
@@ -502,7 +504,6 @@ function clearFormValidationFeedback() {
   form.querySelectorAll('.form-group').forEach(grp => grp.classList.remove('has-error'));
 }
 
-// Form validation rules adhering to modern web guidance
 function validateFormInputs(formData) {
   const errors = {};
   const name = formData.get('fullName')?.trim() || '';
@@ -526,7 +527,7 @@ function validateFormInputs(formData) {
   // Phone validation: 10 digit Indian number
   const phoneRegex = /^[6-9]\d{9}$/;
   if (!phone || !phoneRegex.test(phone)) {
-    errors.phone = 'Please provide a valid 10-digit Indian phone number (starting with 6-9).';
+    errors.phone = 'Please provide a valid 10-digit Indian mobile number (starting with 6-9).';
   }
 
   // Roll number validation
@@ -548,11 +549,9 @@ function handleRegistrationSubmit(e) {
   const formData = new FormData(form);
   const errors = validateFormInputs(formData);
 
-  // Clear previous inline errors
   clearFormValidationFeedback();
 
   if (Object.keys(errors).length > 0) {
-    // Show errors on matching fields
     for (const [fieldName, message] of Object.entries(errors)) {
       const field = form.querySelector(`[name="${fieldName}"]`);
       if (field) {
@@ -564,7 +563,6 @@ function handleRegistrationSubmit(e) {
         }
       }
     }
-    // Focus first invalid element
     const firstInvalid = form.querySelector('.has-error input, .has-error select');
     if (firstInvalid) firstInvalid.focus();
     showToast('Please correct the highlighted fields before submitting', 'error');
@@ -575,7 +573,7 @@ function handleRegistrationSubmit(e) {
   const submitBtn = document.getElementById('submitRegBtn');
   const submitText = document.getElementById('submitBtnText');
   submitBtn.disabled = true;
-  submitText.textContent = 'Generating Secure Pass...';
+  submitText.textContent = 'Generating Verified Pass...';
 
   setTimeout(() => {
     submitBtn.disabled = false;
@@ -583,7 +581,7 @@ function handleRegistrationSubmit(e) {
 
     const eventId = formData.get('selectedEventId');
     const registeredEvent = state.events.find(ev => ev.id === eventId) || state.selectedEventForReg;
-    const bookingCode = `KE-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+    const bookingCode = `EM-2026-${Math.floor(10000 + Math.random() * 90000)}`;
 
     const newTicket = {
       bookingCode,
@@ -653,14 +651,11 @@ function renderSvgQrCode(containerId, code) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Generate crisp deterministic 2D QR pattern in pure SVG
   let path = '';
   const size = 15;
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
-      // Deterministic pseudo-random pattern based on code chars + row/col
       const hash = (code.charCodeAt((r + c) % code.length) * 31 + r * 17 + c * 7) % 100;
-      // Keep QR corners solid positioning blocks
       const isCorner1 = r < 4 && c < 4;
       const isCorner2 = r < 4 && c >= size - 4;
       const isCorner3 = r >= size - 4 && c < 4;
@@ -685,14 +680,13 @@ function addCurrentTicketToCalendar() {
   if (!state.activeTicket) return;
   const t = state.activeTicket;
 
-  // Create .ics calendar file content
   const icsData = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//KIIT University//K-Explore Events//EN',
+    'PRODID:-//KIIT University//Event Management Portal//EN',
     'BEGIN:VEVENT',
     `SUMMARY:${t.eventTitle}`,
-    `DESCRIPTION:Registration Code: ${t.bookingCode}\\nAttendee: ${t.fullName}\\nPass: ${t.ticketType}`,
+    `DESCRIPTION:Pass Code: ${t.bookingCode}\\nAttendee: ${t.fullName}\\nPass Type: ${t.ticketType}`,
     `LOCATION:${t.eventVenue}`,
     `STATUS:CONFIRMED`,
     'END:VEVENT',
@@ -702,7 +696,7 @@ function addCurrentTicketToCalendar() {
   const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.setAttribute('download', `${t.bookingCode}-event.ics`);
+  link.setAttribute('download', `${t.bookingCode}-pass.ics`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -737,8 +731,8 @@ function openMyTicketsModal() {
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
           <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
         </svg>
-        <h3 class="empty-state-title">No Registered Tickets Yet</h3>
-        <p class="empty-state-desc">You haven't registered for any events yet. Explore upcoming campus hackathons and fests to book your spot!</p>
+        <h3 class="empty-state-title">No Registered Passes Yet</h3>
+        <p class="empty-state-desc">You haven't registered for any events yet. Explore upcoming campus hackathons, fests, and workshops to book your spot!</p>
         <button type="button" class="btn btn-primary btn-sm" id="emptyExploreBtn">Explore Events Now</button>
       </div>
     `;
@@ -798,8 +792,8 @@ function cancelRegistration(index) {
     state.registrations.splice(index, 1);
     localStorage.setItem(STORAGE_KEYS.REGISTRATIONS, JSON.stringify(state.registrations));
     updateTicketsBadge();
-    openMyTicketsModal(); // re-render list
-    showToast(`Cancelled registration for ${ticket.bookingCode}`, 'info');
+    openMyTicketsModal();
+    showToast(`Cancelled pass ${ticket.bookingCode}`, 'info');
   }
 }
 
@@ -813,16 +807,15 @@ function initStatsCounter() {
       if (entry.isIntersecting) {
         const el = entry.target;
         const target = parseInt(el.getAttribute('data-target'), 10);
-        let start = 0;
         const duration = 1400;
         const startTime = performance.now();
 
         function updateNumber(now) {
           const progress = Math.min((now - startTime) / duration, 1);
           const current = Math.floor(progress * target);
-          if (target === 500000) {
+          if (target >= 500000) {
             el.textContent = `₹${(current / 100000).toFixed(1)}L+`;
-          } else if (target === 15000) {
+          } else if (target >= 10000) {
             el.textContent = `${(current / 1000).toFixed(0)},000+`;
           } else if (target === 100) {
             el.textContent = `${current}%`;
@@ -854,7 +847,7 @@ function triggerCelebratoryConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const colors = ['#6366f1', '#06b6d4', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
+  const colors = ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ec4899', '#7c3aed'];
   const confettiCount = 140;
   const particles = [];
 
@@ -881,7 +874,7 @@ function triggerCelebratoryConfetti() {
     particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.35; // gravity
+      p.vy += 0.35;
       p.rot += p.vrot;
       if (elapsed > 1800) {
         p.opacity -= 0.02;
@@ -921,7 +914,7 @@ function showToast(message, type = 'info') {
   toast.innerHTML = `
     <span class="toast-icon">${icon}</span>
     <div class="toast-body">
-      <div class="toast-title">${type.toUpperCase()}</div>
+      <div class="toast-title" style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${type}</div>
       <div class="toast-msg">${message}</div>
     </div>
   `;
@@ -936,6 +929,15 @@ function showToast(message, type = 'info') {
     }, 300);
   }, 3500);
 }
+
+// Global Newsletter subscriber handler
+window.subscribeNewsletter = function(e) {
+  const emailInput = document.getElementById('newsletterEmail');
+  if (emailInput && emailInput.value) {
+    showToast(`Subscribed ${emailInput.value}! You'll receive weekly campus event alerts.`, 'success');
+    emailInput.value = '';
+  }
+};
 
 // ============================================================================
 // Event Listeners & Light Dismiss Handling
@@ -1082,7 +1084,7 @@ function initEventListeners() {
   const calBtn = document.getElementById('calendarTicketBtn');
   if (calBtn) calBtn.addEventListener('click', addCurrentTicketToCalendar);
 
-  // Modern input interaction validation feedback (clearing error as user types)
+  // Modern input interaction validation feedback
   if (regForm) {
     regForm.querySelectorAll('input, select, textarea').forEach(input => {
       input.addEventListener('input', () => {
