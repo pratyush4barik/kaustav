@@ -22,13 +22,22 @@ function formatTime(dateObj) {
 }
 
 export const CATEGORIES = [
-  { id: 'all', label: 'All Events', icon: 'sparkles' },
-  { id: 'tech', label: 'Tech & Coding', icon: 'code' },
-  { id: 'cultural', label: 'Cultural & Arts', icon: 'palette' },
-  { id: 'music', label: 'Music & Concerts', icon: 'music' },
-  { id: 'workshops', label: 'Workshops & Seminars', icon: 'graduation-cap' },
-  { id: 'gaming', label: 'Gaming & Esports', icon: 'gamepad' },
-  { id: 'sports', label: 'Sports & Athletics', icon: 'trophy' }
+  { id: 'all', label: 'All Events', icon: '✨' },
+  { id: 'tech', label: 'Tech & AI', icon: '💻' },
+  { id: 'cultural', label: 'Culture & Arts', icon: '🎭' },
+  { id: 'music', label: 'Music & Concerts', icon: '🎵' },
+  { id: 'workshops', label: 'Workshops', icon: '🎓' },
+  { id: 'gaming', label: 'Gaming & Esports', icon: '🎮' },
+  { id: 'sports', label: 'Sports League', icon: '🏆' }
+];
+
+export const CAMPUS_ZONES = [
+  { id: 'all', name: 'All Campuses', label: '28+ Campuses' },
+  { id: 'campus-6', name: 'Campus 6', label: 'Auditorium & Tech Complex' },
+  { id: 'campus-13', name: 'Campus 13', label: 'Stadium & Sports Grounds' },
+  { id: 'campus-7', name: 'Campus 7', label: 'Chintan Convention Hall' },
+  { id: 'campus-11', name: 'Campus 11', label: 'TBI Innovation Incubator' },
+  { id: 'campus-15', name: 'Campus 15', label: 'Open Amphitheatre' }
 ];
 
 export const EVENTS_DATA = [
@@ -36,7 +45,8 @@ export const EVENTS_DATA = [
     id: 'kiit-hacksprint-2026',
     title: 'HackSprint X: 36-Hour National Hackathon',
     category: 'tech',
-    categoryLabel: 'Tech & Coding',
+    categoryLabel: 'Tech & AI',
+    campusZone: 'campus-6',
     featured: true,
     targetDate: getFutureDate(11, 9, 30),
     timeRange: '09:30 AM - 09:30 PM (36 Hrs)',
@@ -74,7 +84,8 @@ export const EVENTS_DATA = [
     id: 'kalliope-fest-2026',
     title: 'Kalliope ’26: Annual Inter-University Cultural Fest',
     category: 'cultural',
-    categoryLabel: 'Cultural & Arts',
+    categoryLabel: 'Culture & Arts',
+    campusZone: 'campus-13',
     featured: true,
     targetDate: getFutureDate(24, 17, 0),
     timeRange: '05:00 PM - 11:30 PM (3 Days)',
@@ -109,7 +120,8 @@ export const EVENTS_DATA = [
     id: 'ai-robotics-summit',
     title: 'NextGen AI & Autonomous Robotics Conclave',
     category: 'workshops',
-    categoryLabel: 'Workshops & Seminars',
+    categoryLabel: 'Workshops',
+    campusZone: 'campus-7',
     featured: true,
     targetDate: getFutureDate(7, 10, 0),
     timeRange: '10:00 AM - 05:00 PM',
@@ -146,6 +158,7 @@ export const EVENTS_DATA = [
     title: 'ElectroPulse: Neon EDM & Bass Festival',
     category: 'music',
     categoryLabel: 'Music & Concerts',
+    campusZone: 'campus-15',
     featured: false,
     targetDate: getFutureDate(17, 18, 30),
     timeRange: '06:30 PM - 11:30 PM',
@@ -180,6 +193,7 @@ export const EVENTS_DATA = [
     title: 'Campus Valorant & BGMI Esports Championship',
     category: 'gaming',
     categoryLabel: 'Gaming & Esports',
+    campusZone: 'campus-13',
     featured: true,
     targetDate: getFutureDate(5, 11, 0),
     timeRange: '11:00 AM - 08:30 PM',
@@ -213,7 +227,8 @@ export const EVENTS_DATA = [
     id: 'kiit-cricket-championship',
     title: 'KPL 2026: Floodlight Cricket League Finals',
     category: 'sports',
-    categoryLabel: 'Sports & Athletics',
+    categoryLabel: 'Sports League',
+    campusZone: 'campus-13',
     featured: false,
     targetDate: getFutureDate(14, 16, 0),
     timeRange: '04:00 PM - 10:30 PM',
@@ -248,7 +263,8 @@ export const EVENTS_DATA = [
     id: 'web3-cloud-masterclass',
     title: 'Web3 & Cloud Architectures Masterclass',
     category: 'tech',
-    categoryLabel: 'Tech & Coding',
+    categoryLabel: 'Tech & AI',
+    campusZone: 'campus-6',
     featured: false,
     targetDate: getFutureDate(3, 14, 0),
     timeRange: '02:00 PM - 06:00 PM',
@@ -283,7 +299,8 @@ export const EVENTS_DATA = [
     id: 'designverse-uiux-sprint',
     title: 'DesignVerse: UI/UX & Design Systems Sprint',
     category: 'workshops',
-    categoryLabel: 'Workshops & Seminars',
+    categoryLabel: 'Workshops',
+    campusZone: 'campus-6',
     featured: false,
     targetDate: getFutureDate(6, 10, 0),
     timeRange: '10:00 AM - 04:30 PM',
@@ -318,7 +335,8 @@ export const EVENTS_DATA = [
     id: 'chaar-chinar-film-expo',
     title: 'Chaar-Chinar: National Student Film & Photo Expo',
     category: 'cultural',
-    categoryLabel: 'Cultural & Arts',
+    categoryLabel: 'Culture & Arts',
+    campusZone: 'campus-6',
     featured: false,
     targetDate: getFutureDate(28, 11, 30),
     timeRange: '11:30 AM - 07:00 PM',
@@ -353,7 +371,8 @@ export const EVENTS_DATA = [
     id: 'founders-crucible-summit',
     title: 'Founder\'s Crucible: Startup Pitch & Seed Summit',
     category: 'workshops',
-    categoryLabel: 'Workshops & Seminars',
+    categoryLabel: 'Workshops',
+    campusZone: 'campus-11',
     featured: false,
     targetDate: getFutureDate(20, 10, 30),
     timeRange: '10:30 AM - 05:00 PM',
@@ -389,6 +408,7 @@ export const EVENTS_DATA = [
     title: 'Acoustic Sunset: Poetry & Open Mic Unplugged',
     category: 'music',
     categoryLabel: 'Music & Concerts',
+    campusZone: 'campus-15',
     featured: false,
     targetDate: getFutureDate(8, 17, 30),
     timeRange: '05:30 PM - 09:00 PM',
@@ -422,7 +442,8 @@ export const EVENTS_DATA = [
     id: 'robowar-mech-arena',
     title: 'RoboWars 2026: Heavyweight Combat Arena',
     category: 'tech',
-    categoryLabel: 'Tech & Coding',
+    categoryLabel: 'Tech & AI',
+    campusZone: 'campus-6',
     featured: false,
     targetDate: getFutureDate(10, 13, 0),
     timeRange: '01:00 PM - 07:00 PM',
@@ -457,7 +478,8 @@ export const EVENTS_DATA = [
     id: 'tedx-kiit-2026',
     title: 'TEDxKIIT: Catalysts of Tomorrow',
     category: 'workshops',
-    categoryLabel: 'Workshops & Seminars',
+    categoryLabel: 'Workshops',
+    campusZone: 'campus-6',
     featured: true,
     targetDate: getFutureDate(16, 10, 0),
     timeRange: '10:00 AM - 04:30 PM',
@@ -493,7 +515,8 @@ export const EVENTS_DATA = [
     id: 'kiit-green-marathon',
     title: 'Campus Green Run: 10K & 5K Fitness Marathon',
     category: 'sports',
-    categoryLabel: 'Sports & Athletics',
+    categoryLabel: 'Sports League',
+    campusZone: 'campus-13',
     featured: false,
     targetDate: getFutureDate(22, 6, 0),
     timeRange: '06:00 AM - 10:00 AM',
@@ -528,10 +551,20 @@ export const EVENTS_DATA = [
 
 // Helper functions for formatting display
 export function getFormattedEvent(event) {
+  const d = event.targetDate;
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const now = new Date();
+  const diffDays = Math.max(0, Math.ceil((d - now) / (1000 * 60 * 60 * 24)));
+
   return {
     ...event,
-    formattedDate: formatDate(event.targetDate),
-    formattedTime: formatTime(event.targetDate),
+    formattedDate: formatDate(d),
+    formattedTime: formatTime(d),
+    monthShort: monthNames[d.getMonth()],
+    dayNumber: d.getDate(),
+    weekday: dayNames[d.getDay()],
+    daysLeft: diffDays,
     seatsRemaining: Math.max(0, event.capacity - event.registeredCount),
     percentFull: Math.min(100, Math.round((event.registeredCount / event.capacity) * 100))
   };

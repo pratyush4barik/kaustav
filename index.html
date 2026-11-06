@@ -1,56 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Management — Official Campus Events Portal | KIIT University</title>
-  <meta name="description" content="Discover, explore, and register for premier collegiate hackathons, cultural festivals, tech conclaves, esports championships, and certified workshops at KIIT.">
-  <meta name="theme-color" content="#4f46e5">
+  <title>Event Management — Official Campus Events Platform | KIIT University</title>
+  <meta name="description" content="Discover, explore, and register for premier collegiate hackathons, cultural festivals, AI conclaves, esports championships, and certified workshops at KIIT.">
+  <meta name="theme-color" content="#090b10">
   
   <!-- Favicon SVG Data URI -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2306b6d4'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E">
 
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-  <!-- Confetti Canvas for Celebratory Registrations -->
+  <!-- Confetti Particle Canvas -->
   <canvas id="confettiCanvas"></canvas>
 
   <!-- ========================================================================
-       Navigation Header
+       1. Floating Island Capsule Navbar
        ======================================================================== -->
-  <header class="navbar" id="topNavbar">
-    <div class="container nav-container">
+  <div class="navbar-wrap">
+    <nav class="navbar-island" id="topNavbar" aria-label="Main Navigation">
       <!-- Brand Logo -->
       <a href="#hero" class="nav-brand" aria-label="Event Management Home">
-        <div class="brand-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <div class="brand-badge-hex" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
         </div>
-        <div class="brand-text-col">
-          <span class="brand-title">Event Management<span style="color: var(--brand-primary)">.</span></span>
-          <span class="brand-sub">KIIT University</span>
+        <div class="brand-info">
+          <span class="brand-name">EVENTOS<span style="color: var(--accent-cyan)">.</span></span>
+          <span class="brand-tag">KIIT EVENT MANAGEMENT</span>
         </div>
       </a>
 
-      <!-- Desktop Nav Links -->
-      <nav class="nav-links" aria-label="Main Navigation">
-        <a href="#events" class="nav-link active">Explore Events</a>
-        <a href="#spotlight" class="nav-link">Featured Spotlight</a>
-        <a href="#features" class="nav-link">Portal Perks</a>
-        <a href="#venues" class="nav-link">Campus Venues</a>
-        <a href="#faq" class="nav-link">FAQs</a>
-      </nav>
+      <!-- Center Links Capsule -->
+      <div class="nav-center-links">
+        <a href="#spotlight" class="nav-pill-link">Spotlight</a>
+        <a href="#zones" class="nav-pill-link">Campus Zones</a>
+        <a href="#events" class="nav-pill-link active">Discover Events</a>
+        <a href="#mentors" class="nav-pill-link">Star Mentors</a>
+        <a href="#faq" class="nav-pill-link">FAQs</a>
+      </div>
 
-      <!-- Nav Actions (Theme, Tickets, Mobile Toggle) -->
+      <!-- Action Items -->
       <div class="nav-actions">
-        <!-- Dark / Light Mode Toggle Button -->
-        <button type="button" class="btn-icon theme-toggle" id="themeToggleBtn" aria-label="Toggle Dark and Light Mode" title="Toggle Theme">
-          <!-- Sun Icon (Shown in Dark Mode) -->
-          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Theme Switcher -->
+        <button type="button" class="theme-switch-btn" id="themeToggleBtn" aria-label="Toggle Dark and Light Mode" title="Toggle Theme">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -61,799 +60,639 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <!-- Moon Icon (Shown in Light Mode) -->
-          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
 
-        <!-- "My Tickets" Button with Live Count Badge -->
-        <button type="button" class="btn btn-secondary btn-sm" id="myTicketsBtn" aria-label="View My Booked Tickets">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Digital Pass Wallet Pill -->
+        <button type="button" class="btn-wallet-badge" id="myTicketsBtn" aria-label="My Passes Wallet">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
           </svg>
           <span>My Passes</span>
-          <span class="tickets-btn-badge" id="myTicketsBadge">0</span>
+          <span class="wallet-count-dot" id="myTicketsBadge">0</span>
         </button>
 
-        <!-- CTA Direct Register -->
-        <a href="#events" class="btn btn-primary btn-sm">Explore All</a>
-
-        <!-- Mobile Hamburger Toggle -->
-        <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
+        <!-- Mobile Drawer Toggle -->
+        <button type="button" class="mobile-menu-btn" id="mobileNavToggle" aria-label="Toggle Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
       </div>
-    </div>
+    </nav>
 
-    <!-- Mobile Drawer Menu -->
-    <div class="mobile-drawer" id="mobileDrawer">
-      <div class="mobile-drawer-links">
-        <a href="#events" class="mobile-drawer-link">Explore Events</a>
-        <a href="#spotlight" class="mobile-drawer-link">Featured Spotlight</a>
-        <a href="#features" class="mobile-drawer-link">Portal Perks</a>
-        <a href="#venues" class="mobile-drawer-link">Campus Venues</a>
-        <a href="#faq" class="mobile-drawer-link">FAQs & Support</a>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: auto;">
-        <button type="button" class="btn btn-secondary" id="mobileMyTicketsBtn">
-          My Registrations (<span id="mobileTicketsBadge">0</span>)
-        </button>
-        <a href="#events" class="btn btn-primary" id="mobileExploreBtn">Browse All Events</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- ========================================================================
-       Hero Section
-       ======================================================================== -->
-  <section class="hero" id="hero">
-    <div class="hero-glow-blob" aria-hidden="true"></div>
-    <div class="container hero-content">
-      <div class="hero-badge">
-        <span class="ping-dot" aria-hidden="true"></span>
-        <span>Official KIIT University Event Management Portal 2026</span>
-      </div>
-
-      <h1 class="hero-title">
-        Discover, Experience & Lead with <span class="gradient-text">Event Management</span>
-      </h1>
-
-      <p class="hero-subtitle">
-        Your unified gateway for national hackathons, star-studded cultural fests, cutting-edge AI conclaves, esports arenas, and certified masterclasses across KIIT campuses.
-      </p>
-
-      <div class="hero-cta-group">
-        <a href="#events" class="btn btn-primary btn-lg">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          Browse Upcoming Events
-        </a>
-        <button type="button" class="btn btn-secondary btn-lg" id="heroQuickRegisterBtn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="8.5" cy="7.5" r="4"></circle>
-            <line x1="20" y1="8" x2="20" y2="14"></line>
-            <line x1="23" y1="11" x2="17" y2="11"></line>
-          </svg>
-          Quick Event Pass
-        </button>
-      </div>
-
-      <!-- Live Interactive Stats Counters -->
-      <div class="hero-stats-grid" id="about">
-        <div class="stat-item">
-          <div class="stat-value" data-target="28">28+</div>
-          <div class="stat-label">Active Campus Events</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" data-target="18000">18,000+</div>
-          <div class="stat-label">Annual Attendees</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" data-target="500000">₹7,50,000+</div>
-          <div class="stat-label">Prize Pool & Grants</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" data-target="100">100%</div>
-          <div class="stat-label">Verified Experience</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       Live Campus Ticker Banner
-       ======================================================================== -->
-  <div class="campus-ticker-wrap" aria-label="Campus Announcements">
-    <div class="campus-ticker">
-      <div class="ticker-item"><span class="hot">🔥 HOT</span> <strong>HackSprint X:</strong> 36-Hour National Hackathon Registrations Live</div>
-      <div class="ticker-item"><span>⚡</span> <strong>RoboWars 2026:</strong> Arena Seats 85% Booked</div>
-      <div class="ticker-item"><span class="hot">🌟 FLAGSHIP</span> <strong>Kalliope ’26:</strong> Star Night Headliners Announced</div>
-      <div class="ticker-item"><span>🎮</span> <strong>Esports Championship:</strong> Valorant & BGMI Tournament Registration Closing Soon</div>
-      <div class="ticker-item"><span>💡</span> <strong>TEDxKIIT:</strong> Catalysts of Tomorrow Delegate Passes Available</div>
-      <div class="ticker-item"><span>🏃</span> <strong>Green Marathon:</strong> 10K & 5K Campus Fitness Run Open for All</div>
-      <!-- Duplicate for seamless looping -->
-      <div class="ticker-item"><span class="hot">🔥 HOT</span> <strong>HackSprint X:</strong> 36-Hour National Hackathon Registrations Live</div>
-      <div class="ticker-item"><span>⚡</span> <strong>RoboWars 2026:</strong> Arena Seats 85% Booked</div>
-      <div class="ticker-item"><span class="hot">🌟 FLAGSHIP</span> <strong>Kalliope ’26:</strong> Star Night Headliners Announced</div>
-      <div class="ticker-item"><span>🎮</span> <strong>Esports Championship:</strong> Valorant & BGMI Tournament Registration Closing Soon</div>
+    <!-- Mobile Flyout Menu -->
+    <div class="mobile-flyout" id="mobileDrawer">
+      <a href="#spotlight">Featured Spotlight</a>
+      <a href="#zones">Campus Zones</a>
+      <a href="#events">Discover Events</a>
+      <a href="#mentors">Star Mentors</a>
+      <a href="#faq">Frequently Asked Questions</a>
+      <button type="button" class="btn-wallet-badge" id="mobileMyTicketsBtn" style="justify-content: center; width: 100%; margin-top: 0.5rem;">
+        View My Registrations (<span id="mobileTicketsBadge">0</span>)
+      </button>
     </div>
   </div>
 
   <!-- ========================================================================
-       Featured Spotlight Section (With Live Ticking Countdown)
+       2. Hero Section & Next-Gen Bento Stage
        ======================================================================== -->
-  <section class="section spotlight-section" id="spotlight">
+  <section class="hero-bento-section" id="hero">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          Featured Spotlight Event
-        </span>
-        <h2 class="section-title">Don't Miss the Season's Flagship Event</h2>
-        <p class="section-desc">Hand-picked by campus organizers. Experience real-time innovation, top-tier mentorship, and massive cash awards.</p>
-      </div>
-
-      <!-- Spotlight Banner Card -->
-      <article class="spotlight-card" id="spotlightCard">
-        <div class="spotlight-media">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="HackSprint X Banner" class="spotlight-img" id="spotlightImg" fetchpriority="high">
-          <div class="spotlight-overlay">
-            <div class="spotlight-media-badges">
-              <span class="badge badge-featured">Flagship Conclave</span>
-              <span class="badge badge-price-free">Free Entry</span>
-            </div>
-            <div class="spotlight-venue-chip">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <span id="spotlightVenue">Campus 6 Auditorium & Lab Complex</span>
-            </div>
-          </div>
+      <div class="hero-header-block">
+        <div class="hero-pill-status">
+          <span class="live-beacon"></span>
+          <span>OFFICIAL 2026-27 CAMPUS OS // KIIT UNIVERSITY</span>
         </div>
 
-        <div class="spotlight-content">
-          <div>
-            <div class="spotlight-meta-header">
-              <span class="spotlight-category" id="spotlightCategory">Tech & Coding</span>
-              <span class="badge badge-soon">Closing Soon</span>
+        <h1 class="hero-epic-title">
+          Where Campus Passion, <span class="gradient-text">Tech & Culture</span> Converge
+        </h1>
+
+        <p class="hero-sub-editorial">
+          Eastern India's most vibrant university event ecosystem. Explore national hackathons, star cultural nights, combat robotics, esports showdowns, and high-impact founder conclaves.
+        </p>
+
+        <!-- Hero Fast Search Field -->
+        <div class="hero-fast-search-box">
+          <svg class="hero-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="hero-search-input" id="heroFastSearchInput" placeholder="Search hackathons, EDM concerts, workshops, sports finals...">
+          <button type="button" class="hero-search-btn" id="heroFastSearchBtn">Explore</button>
+        </div>
+
+        <div class="hero-search-tags">
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-right: 0.35rem;">HOT TAGS:</span>
+          <span class="hero-tag-chip" data-tag="hackathon">#Hackathon</span>
+          <span class="hero-tag-chip" data-tag="concert">#EDM Concert</span>
+          <span class="hero-tag-chip" data-tag="robotics">#Robotics</span>
+          <span class="hero-tag-chip" data-tag="tedx">#TEDx</span>
+          <span class="hero-tag-chip" data-tag="esports">#Esports</span>
+          <span class="hero-tag-chip" data-tag="cricket">#Cricket</span>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           Bento Grid Layout
+           ==================================================================== -->
+      <div class="bento-grid" id="spotlight">
+        <!-- Bento 1: Flagship Spotlight Hero -->
+        <article class="bento-card bento-flagship" id="spotlightCard">
+          <div class="bento-flagship-bg">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Flagship Event Banner" class="bento-flagship-img" id="spotlightImg" fetchpriority="high">
+            <div class="bento-flagship-gradient"></div>
+          </div>
+
+          <div class="bento-flagship-content">
+            <div>
+              <div class="bento-top-badges">
+                <span class="bento-pill-badge bento-pill-flagship">Flagship Conclave</span>
+                <span class="bento-pill-badge bento-pill-free">Free Entry</span>
+                <span class="bento-pill-badge" id="spotlightVenue">Campus 6 Auditorium & Lab</span>
+              </div>
             </div>
-            <h3 class="spotlight-title" id="spotlightTitle">HackSprint X: 36-Hour National Hackathon</h3>
-            <p class="spotlight-desc" id="spotlightDesc">
-              Unleash your coding superpowers in a 36-hour sprint solving challenges in Generative AI, Web3, and HealthTech. Receive mentorship from Google & Silicon Valley tech leads.
+
+            <div>
+              <span class="section-tag-mono" id="spotlightCategory">Tech & AI</span>
+              <h2 class="bento-flagship-title" id="spotlightTitle">HackSprint X: 36-Hour National Hackathon</h2>
+              <p class="bento-flagship-desc" id="spotlightDesc">
+                Unleash your coding powers in Eastern India's largest 36-hour sprint solving challenges in Generative AI, Web3, and HealthTech. Receive mentorship from Google & Silicon Valley tech leads.
+              </p>
+
+              <!-- Live Flip Countdown -->
+              <div class="bento-countdown-box">
+                <div class="countdown-bar-header">
+                  <span>Hacking Commences In</span>
+                  <span style="color: var(--accent-rose); display: flex; align-items: center; gap: 0.35rem;">
+                    <span class="live-beacon" style="background: var(--accent-rose);"></span>
+                    LIVE TICKING
+                  </span>
+                </div>
+                <div class="countdown-dials-row">
+                  <div class="countdown-dial-tile">
+                    <div class="countdown-dial-val" id="spotlightDays">00</div>
+                    <div class="countdown-dial-lbl">Days</div>
+                  </div>
+                  <div class="countdown-dial-tile">
+                    <div class="countdown-dial-val" id="spotlightHours">00</div>
+                    <div class="countdown-dial-lbl">Hours</div>
+                  </div>
+                  <div class="countdown-dial-tile">
+                    <div class="countdown-dial-val" id="spotlightMins">00</div>
+                    <div class="countdown-dial-lbl">Mins</div>
+                  </div>
+                  <div class="countdown-dial-tile">
+                    <div class="countdown-dial-val" id="spotlightSecs">00</div>
+                    <div class="countdown-dial-lbl">Secs</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bento-cta-row">
+                <button type="button" class="btn-card-primary" style="padding: 0.85rem 1.75rem; font-size: 0.95rem;" id="spotlightRegisterBtn">
+                  Claim Delegate Pass
+                </button>
+                <button type="button" class="btn-card-outline" style="padding: 0.85rem 1.5rem; font-size: 0.95rem;" id="spotlightDetailsBtn">
+                  View Rules & Timeline
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bento 2: Cultural Showcase -->
+        <article class="bento-card bento-cultural" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80');">
+          <div class="bento-cultural-overlay"></div>
+          <div class="bento-cultural-content">
+            <span class="bento-pill-badge" style="background: rgba(0,0,0,0.5); margin-bottom: 0.75rem;">🎭 Cultural Fest 2026</span>
+            <h3 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Kalliope ’26 Carnival</h3>
+            <p style="font-size: 0.88rem; opacity: 0.9; margin-bottom: 1.25rem;">
+              Celebrity concert nights, runway couture shows, and 50+ curated food hubs.
             </p>
+            <a href="#events" class="btn-card-primary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.8rem;" data-category-link="cultural">
+              Explore Cultural Lineup →
+            </a>
           </div>
+        </article>
 
-          <!-- Live Countdown Timer -->
-          <div class="countdown-box-wrapper">
-            <div class="countdown-title">
-              <span>Event Commences In</span>
-              <span class="countdown-live-badge">
-                <span class="pulse" aria-hidden="true"></span>
-                LIVE COUNTDOWN
-              </span>
-            </div>
-            <div class="countdown-units">
-              <div class="countdown-unit">
-                <div class="countdown-digit" id="spotlightDays">00</div>
-                <div class="countdown-unit-label">Days</div>
-              </div>
-              <div class="countdown-unit">
-                <div class="countdown-digit" id="spotlightHours">00</div>
-                <div class="countdown-unit-label">Hours</div>
-              </div>
-              <div class="countdown-unit">
-                <div class="countdown-digit" id="spotlightMins">00</div>
-                <div class="countdown-unit-label">Mins</div>
-              </div>
-              <div class="countdown-unit">
-                <div class="countdown-digit" id="spotlightSecs">00</div>
-                <div class="countdown-unit-label">Secs</div>
-              </div>
-            </div>
+        <!-- Bento 3: Live Campus Telemetry -->
+        <div class="bento-card bento-telemetry" id="about">
+          <div class="metric-tile">
+            <div class="metric-number stat-value" data-target="28">28+</div>
+            <div class="metric-name">Active Events</div>
           </div>
-
-          <div class="spotlight-actions">
-            <button type="button" class="btn btn-primary" id="spotlightRegisterBtn">
-              Register for Spotlight
-            </button>
-            <button type="button" class="btn btn-secondary" id="spotlightDetailsBtn">
-              View Schedule & Rules
-            </button>
+          <div class="metric-tile">
+            <div class="metric-number stat-value" data-target="18000">18,000+</div>
+            <div class="metric-name">Annual Attendees</div>
+          </div>
+          <div class="metric-tile">
+            <div class="metric-number stat-value" data-target="500000">₹7.5L+</div>
+            <div class="metric-name">Grants & Prizes</div>
+          </div>
+          <div class="metric-tile">
+            <div class="metric-number stat-value" data-target="100">100%</div>
+            <div class="metric-name">Paperless Passes</div>
           </div>
         </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       Search & Filter System
-       ======================================================================== -->
-  <section class="filter-section" id="filterSection">
-    <div class="container filter-container">
-      <div class="search-and-controls">
-        <!-- Search Bar with Live Realtime Filter -->
-        <div class="search-bar">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="search" id="searchInput" class="search-input" placeholder="Search by event title, venue, or keywords (e.g., AI, Hackathon, Music, Robotics)..." aria-label="Search Events">
-          <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear Search Input">✕</button>
-        </div>
-
-        <!-- Filter Dropdowns -->
-        <div class="filter-dropdown-group">
-          <!-- Price Filter -->
-          <select id="priceFilter" class="custom-select" aria-label="Filter by Price">
-            <option value="all">All Prices</option>
-            <option value="free">Free Events Only</option>
-            <option value="paid">Paid Passes Only</option>
-          </select>
-
-          <!-- Sort Selector -->
-          <select id="sortSelector" class="custom-select" aria-label="Sort Events">
-            <option value="upcoming">Sort: Date (Upcoming)</option>
-            <option value="popular">Sort: Most Popular</option>
-            <option value="title">Sort: Title (A-Z)</option>
-            <option value="seats">Sort: Seats Remaining</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Category Filter Pills Row -->
-      <div class="category-pills-row" id="categoryPillsRow" role="tablist" aria-label="Event Categories">
-        <!-- Injected dynamically via JS with active indicator -->
       </div>
     </div>
   </section>
 
   <!-- ========================================================================
-       Upcoming & Featured Events Section
+       3. Live Campus Ticker Ribbon
        ======================================================================== -->
-  <section class="section" id="events">
+  <div class="ticker-strip" aria-label="Campus Live Announcements">
+    <div class="ticker-track">
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">HOT:</span> HackSprint X Registrations Open (36-Hour National Hackathon)</span>
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">ALERT:</span> RoboWars Combat Arena 85% Booked at Campus 8</span>
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">ANNOUNCED:</span> Kalliope ’26 Mega Star Night Headliners Released</span>
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">NEW:</span> TEDxKIIT Catalysts of Tomorrow Delegate Passes Live</span>
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">OPEN:</span> Campus Green Marathon 10K & 5K Registration</span>
+      <!-- Duplicate Track for Seamless Loop -->
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">HOT:</span> HackSprint X Registrations Open (36-Hour National Hackathon)</span>
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">ALERT:</span> RoboWars Combat Arena 85% Booked at Campus 8</span>
+      <span><span class="ticker-bullet">▶</span> <span class="ticker-accent">ANNOUNCED:</span> Kalliope ’26 Mega Star Night Headliners Released</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       4. Campus Zone Matrix Selector
+       ======================================================================== -->
+  <section class="campus-zones-section" id="zones">
     <div class="container">
-      <!-- Feedback bar with live count and clear filters -->
-      <div class="filter-feedback-bar">
+      <div class="section-head-row">
         <div>
-          Showing <span class="filter-count-badge" id="visibleEventsCount">0</span> of <span id="totalEventsCount">0</span> events
+          <span class="section-tag-mono">Campus Navigation Matrix</span>
+          <h2 class="section-h2">Filter by Campus Complex</h2>
         </div>
-        <button type="button" class="btn-reset-filters" id="resetFiltersBtn" style="display: none;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Click any campus hub to view scheduled conclaves and arenas.
+        </p>
+      </div>
+
+      <div class="campus-zone-pills-row" id="campusZonePillsRow">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       5. Main Discover & Interactive Events Engine
+       ======================================================================== -->
+  <section class="events-engine-section" id="events">
+    <div class="container">
+      <!-- Floating Control Dock -->
+      <div class="control-dock">
+        <div class="dock-search-and-view">
+          <div class="dock-search-field">
+            <svg class="dock-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" id="searchInput" class="dock-search-input" placeholder="Search by title, domain, speaker or campus venue...">
+            <button type="button" class="dock-search-clear" id="searchClearBtn" aria-label="Clear Search">✕</button>
+          </div>
+
+          <div class="dock-right-actions">
+            <!-- Price Dropdown -->
+            <select id="priceFilter" class="dock-dropdown" aria-label="Price Filter">
+              <option value="all">All Passes</option>
+              <option value="free">Free Events Only</option>
+              <option value="paid">Paid Passes Only</option>
+            </select>
+
+            <!-- Sort Dropdown -->
+            <select id="sortSelector" class="dock-dropdown" aria-label="Sort Order">
+              <option value="upcoming">Sort: Date (Upcoming)</option>
+              <option value="popular">Sort: Most Popular</option>
+              <option value="title">Sort: Title (A-Z)</option>
+              <option value="seats">Sort: Seats Remaining</option>
+            </select>
+
+            <!-- View Switcher -->
+            <div class="view-switcher" role="group" aria-label="View Mode">
+              <button type="button" class="view-btn active" id="viewModeGridBtn" title="Grid View">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span>Grid</span>
+              </button>
+              <button type="button" class="view-btn" id="viewModeListBtn" title="Timeline View">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                <span>Timeline</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Pills Row -->
+        <div class="dock-categories-row" id="categoryPillsRow">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Quick Filter Badges Row -->
+        <div class="quick-filters-row">
+          <span>QUICK ACCESS:</span>
+          <button type="button" class="quick-filter-chip active" data-quick="all">All Events</button>
+          <button type="button" class="quick-filter-chip" data-quick="free">Free Access</button>
+          <button type="button" class="quick-filter-chip" data-quick="week">This Week</button>
+          <button type="button" class="quick-filter-chip" data-quick="fast">Selling Fast</button>
+        </div>
+      </div>
+
+      <!-- Feedback Meta Bar -->
+      <div class="results-meta-bar">
+        <div class="results-meta-count">
+          Showing <strong id="visibleEventsCount">0</strong> of <span id="totalEventsCount">0</span> events
+        </div>
+        <button type="button" class="reset-all-btn" id="resetFiltersBtn" style="display: none;">
           Reset All Filters
         </button>
       </div>
 
-      <!-- Events Card Grid -->
-      <div class="events-grid" id="eventsGrid" aria-live="polite">
-        <!-- Event Cards dynamically rendered by app.js -->
+      <!-- Events Dynamic Container (Grid or Timeline) -->
+      <div class="events-display-container grid-mode" id="eventsGrid" aria-live="polite">
+        <!-- Rendered dynamically by app.js -->
       </div>
     </div>
   </section>
 
   <!-- ========================================================================
-       Portal Ecosystem & Key Perks Section
+       6. Star Mentors & Keynote Hall of Fame
        ======================================================================== -->
-  <section class="section features-section" id="features">
+  <section class="mentors-section" id="mentors">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Seamless Infrastructure</span>
-        <h2 class="section-title">Designed for Modern Campus Life</h2>
-        <p class="section-desc">From instant QR credentials to real-time seat availability, our Event Management platform eliminates friction for students and organizers alike.</p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-box">
-          <div class="feature-icon-wrap">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="7" y1="7" x2="7.01" y2="7"></line><line x1="17" y1="7" x2="17.01" y2="7"></line><line x1="7" y1="17" x2="7.01" y2="17"></line><line x1="17" y1="17" x2="17.01" y2="17"></line></svg>
-          </div>
-          <h3>Instant Digital Pass</h3>
-          <p>Get a verified digital boarding pass with deterministic SVG QR code and reference ID instantly upon registering.</p>
-        </div>
-
-        <div class="feature-box">
-          <div class="feature-icon-wrap">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          </div>
-          <h3>Calendar (.ics) Sync</h3>
-          <p>Download RFC-compliant calendar invites directly to your Google, Apple, or Outlook calendar with venue and timing details.</p>
-        </div>
-
-        <div class="feature-box">
-          <div class="feature-icon-wrap">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          </div>
-          <h3>Live Seat Tracking</h3>
-          <p>Monitor real-time attendee counts and seat capacity bars so you never miss out on high-demand workshops and fests.</p>
-        </div>
-
-        <div class="feature-box">
-          <div class="feature-icon-wrap">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-          <h3>Zero Paperwork Check-in</h3>
-          <p>Show your digital pass or print as PDF. Scan-and-go access at auditorium gates and sports arenas with zero hassle.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       Campus Venues Showcase
-       ======================================================================== -->
-  <section class="section" id="venues">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Iconic Venues</span>
-        <h2 class="section-title">World-Class Event Facilities</h2>
-        <p class="section-desc">Explore the state-of-the-art auditoriums, lush stadium grounds, and high-tech incubator spaces across KIIT Deemed to be University.</p>
-      </div>
-
-      <div class="venues-grid">
-        <div class="venue-card">
-          <div class="venue-media">
-            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80" alt="Campus 6 Auditorium" class="venue-img" loading="lazy">
-          </div>
-          <div class="venue-info">
-            <h4>Campus 6 Auditorium</h4>
-            <p>1,200 capacity tier hall with Dolby acoustics and gigabit internet.</p>
-          </div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-media">
-            <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80" alt="Stadium Grounds, Campus 13" class="venue-img" loading="lazy">
-          </div>
-          <div class="venue-info">
-            <h4>Central Stadium, Campus 13</h4>
-            <p>Floodlit athletic stadium hosting cultural fests and sports championships.</p>
-          </div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-media">
-            <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80" alt="Chintan Convention Hall" class="venue-img" loading="lazy">
-          </div>
-          <div class="venue-info">
-            <h4>Chintan Hall, Campus 7</h4>
-            <p>Executive conclave hall tailored for robotics summits and research panels.</p>
-          </div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-media">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="KIIT TBI Innovation Hub" class="venue-img" loading="lazy">
-          </div>
-          <div class="venue-info">
-            <h4>KIIT-TBI Innovation Hub</h4>
-            <p>Startup incubation complex equipped with MakerSpace and pitch arenas.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       FAQ Section
-       ======================================================================== -->
-  <section class="section faq-section" id="faq">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Frequently Asked Questions</span>
-        <h2 class="section-title">Everything You Need to Know</h2>
-        <p class="section-desc">Got questions regarding campus registration, participation rules, or downloading your digital pass?</p>
-      </div>
-
-      <div class="faq-accordion">
-        <details class="faq-item" open>
-          <summary class="faq-summary">
-            <span>How do I receive my registration pass and ticket?</span>
-            <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-answer">
-            Upon submitting the event registration form, your digital boarding pass is instantly generated with a unique Booking Reference Code and an SVG QR Code. You can print or save it as a PDF, add it directly to your calendar, or retrieve it anytime under the "My Passes" section in the navigation bar.
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>Are students from other universities allowed to participate?</span>
-            <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-answer">
-            Yes! Flagship events like HackSprint X, Kalliope ’26 Cultural Fest, and the Esports Championship welcome participants from colleges across India. Select "Other External University" in the registration form and bring your valid college ID card to the venue.
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>Can I cancel or manage my booked events?</span>
-            <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-answer">
-            Yes. Simply click on the "My Passes" button in the navigation header. You can view all your stored registrations in Local Storage, print existing passes, or cancel any registration with a single click to free up seats for other attendees.
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>Will certificates and merchandise be provided?</span>
-            <svg class="faq-icon-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-answer">
-            All registered participants attending technical conclaves, hackathons, and certified workshops receive official verified certificates along with free swag kits, snacks, and access to networking zones.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       Newsletter Alert Bar
-       ======================================================================== -->
-  <div class="container">
-    <div class="newsletter-bar">
-      <h3>Never Miss a Campus Event</h3>
-      <p>Subscribe to weekly event alerts, flagship announcements, and priority workshop seat drops.</p>
-      <form class="newsletter-form" id="newsletterForm" onsubmit="event.preventDefault(); window.subscribeNewsletter(event);">
-        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Enter your student email..." required>
-        <button type="submit" class="newsletter-btn">Subscribe Free</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ========================================================================
-       Footer
-       ======================================================================== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
+      <div class="section-head-row">
         <div>
-          <div class="footer-brand-title">
-            <div class="brand-icon" style="width: 2.2rem; height: 2.2rem;" aria-hidden="true">
+          <span class="section-tag-mono">Ecosystem Mentors</span>
+          <h2 class="section-h2">Star Speakers & Industry Mentors</h2>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Learn from leading engineers, founders, and icons guiding our student conclaves.
+        </p>
+      </div>
+
+      <div class="mentors-grid">
+        <div class="mentor-card">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Dr. Arjun Sen" class="mentor-avatar">
+          <div>
+            <div class="mentor-name">Dr. Arjun Sen</div>
+            <div class="mentor-role">Head of AI Research, DeepScale</div>
+          </div>
+        </div>
+
+        <div class="mentor-card">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Rhea Patel" class="mentor-avatar">
+          <div>
+            <div class="mentor-name">Rhea Patel</div>
+            <div class="mentor-role">Staff Engineer, Google Cloud</div>
+          </div>
+        </div>
+
+        <div class="mentor-card">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Dr. Vikram Chandra" class="mentor-avatar">
+          <div>
+            <div class="mentor-name">Dr. Vikram Chandra</div>
+            <div class="mentor-role">Chief Scientist, RoboDynamics</div>
+          </div>
+        </div>
+
+        <div class="mentor-card">
+          <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80" alt="Kunal Das" class="mentor-avatar">
+          <div>
+            <div class="mentor-name">Kunal "Apex" Das</div>
+            <div class="mentor-role">Official Esports Shoutcaster</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       7. Interactive FAQs Section
+       ======================================================================== -->
+  <section class="campus-zones-section" id="faq">
+    <div class="container">
+      <div class="section-head-row">
+        <div>
+          <span class="section-tag-mono">Guidelines & Answers</span>
+          <h2 class="section-h2">Frequently Asked Questions</h2>
+        </div>
+      </div>
+
+      <div style="max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+        <details style="background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem 1.5rem;" open>
+          <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer;">How do I receive my verified event pass?</summary>
+          <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+            Upon submitting the registration form, your digital boarding pass is instantly generated with a unique Booking Reference Code and an animated SVG QR Code. You can print it as a clean PDF, add it directly to your calendar, or retrieve it anytime under the "My Passes" button in the top navigation.
+          </p>
+        </details>
+
+        <details style="background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem 1.5rem;">
+          <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer;">Can external students from other universities participate?</summary>
+          <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+            Yes! Flagship events like HackSprint X, Kalliope ’26 Cultural Carnival, TEDxKIIT, and the Esports Tournament welcome delegates from colleges across India. Select "Other External University" during registration and carry your valid college ID.
+          </p>
+        </details>
+
+        <details style="background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem 1.5rem;">
+          <summary style="font-weight: 700; font-size: 1.05rem; cursor: pointer;">How does the pass cancellation work?</summary>
+          <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+            Click on "My Passes" in the top bar to inspect your registered tickets stored in your browser. You can cancel any pass with one click to release seats back into the live attendee pool.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       8. Footer
+       ======================================================================== -->
+  <footer class="cyber-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+            <div class="brand-badge-hex">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             </div>
-            <span>Event Management</span>
+            <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">EVENTOS // KIIT</span>
           </div>
-          <p class="footer-brand-desc">
-            The official unified event management and registration portal of KIIT Deemed to be University. Empowering students to build, compete, showcase talent, and celebrate across 28+ state-of-the-art campuses.
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+            The unified collegiate event operating system for KIIT Deemed to be University. Discover, register, and experience world-class campus events across 28+ campuses.
           </p>
-          <div class="social-links">
-            <a href="#" class="social-link" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
-            <a href="#" class="social-link" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-            <a href="#" class="social-link" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-            <a href="#" class="social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <div class="footer-social-row">
+            <a href="#" class="social-circle-btn" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            <a href="#" class="social-circle-btn" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="#" class="social-circle-btn" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
           </div>
         </div>
 
         <div>
-          <h4 class="footer-heading">Quick Links</h4>
-          <ul class="footer-links-list">
-            <li class="footer-link-item"><a href="#events">Upcoming Events</a></li>
-            <li class="footer-link-item"><a href="#spotlight">Featured Spotlight</a></li>
-            <li class="footer-link-item"><a href="#features">Portal Perks</a></li>
-            <li class="footer-link-item"><a href="#venues">Campus Venues</a></li>
-            <li class="footer-link-item"><a href="#faq">Help & Guidelines</a></li>
+          <h4 class="footer-h4">Quick Links</h4>
+          <ul class="footer-ul">
+            <li><a href="#spotlight">Flagship Spotlight</a></li>
+            <li><a href="#zones">Campus Zone Matrix</a></li>
+            <li><a href="#events">Discover Events</a></li>
+            <li><a href="#mentors">Star Mentors</a></li>
+            <li><a href="#faq">Student Guidelines</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-heading">Categories</h4>
-          <ul class="footer-links-list">
-            <li class="footer-link-item"><a href="#events" data-category-link="tech">Tech & Hackathons</a></li>
-            <li class="footer-link-item"><a href="#events" data-category-link="cultural">Cultural & Arts</a></li>
-            <li class="footer-link-item"><a href="#events" data-category-link="gaming">Esports & Gaming</a></li>
-            <li class="footer-link-item"><a href="#events" data-category-link="workshops">Workshops & Conclaves</a></li>
-            <li class="footer-link-item"><a href="#events" data-category-link="sports">Sports & Athletics</a></li>
+          <h4 class="footer-h4">Event Domains</h4>
+          <ul class="footer-ul">
+            <li><a href="#events" data-category-link="tech">Tech & AI Hackathons</a></li>
+            <li><a href="#events" data-category-link="cultural">Cultural & Arts Fests</a></li>
+            <li><a href="#events" data-category-link="gaming">Gaming & Esports Arena</a></li>
+            <li><a href="#events" data-category-link="sports">Sports Championship</a></li>
+            <li><a href="#events" data-category-link="workshops">Masterclasses</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-heading">Campus Contact</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem;">
+          <h4 class="footer-h4">Campus Desk</h4>
+          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem;">
             KIIT Student Activity Centre (KSAC)<br>
             Campus 13, KIIT Deemed to be University<br>
             Bhubaneswar, Odisha 751024
           </p>
-          <p style="font-size: 0.85rem; color: var(--brand-primary); font-weight: 600;">
-            Email: events@kiit.ac.in
+          <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-cyan); font-weight: 700;">
+            events@kiit.ac.in
           </p>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <div>
-          © 2026 KIIT Event Management Portal. Designed & Developed for Web Designing Assessment.
-        </div>
+      <div class="footer-bottom-bar">
+        <div>© 2026 KIIT Event Management Platform. All rights reserved.</div>
         <div style="display: flex; gap: 1rem;">
-          <a href="#" style="color: var(--text-muted);">Privacy Policy</a>
+          <a href="#">Privacy Protocol</a>
           <span>•</span>
-          <a href="#" style="color: var(--text-muted);">Terms of Service</a>
+          <a href="#">Terms of Attendance</a>
           <span>•</span>
-          <a href="#" style="color: var(--text-muted);">Code of Conduct</a>
+          <a href="#">Code of Conduct</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ========================================================================
-       MODAL 1: Event Details Modal (<dialog>)
+       MODALS & DIALOGS
        ======================================================================== -->
+
+  <!-- MODAL 1: Event Details Modal -->
   <dialog id="eventDetailsModal" aria-labelledby="modalEventTitle">
-    <div class="modal-container">
-      <div class="modal-header-sticky">
-        <span class="badge badge-featured" id="modalEventBadge">Featured Event</span>
-        <button type="button" class="modal-close-btn" id="closeDetailsModalBtn" aria-label="Close Event Details">✕</button>
+    <div class="modal-shell">
+      <div class="modal-head-sticky">
+        <span class="bento-pill-badge bento-pill-flagship" id="modalEventBadge">Featured Event</span>
+        <button type="button" class="modal-close-round" id="closeDetailsModalBtn" aria-label="Close">✕</button>
       </div>
 
-      <div class="modal-body-scrollable">
-        <img src="" alt="Event Banner" class="event-modal-banner" id="modalEventBanner">
+      <div class="modal-scroll-body">
+        <img src="" alt="Event Banner" class="modal-hero-banner" id="modalEventBanner">
         
-        <div class="event-modal-chips-row">
-          <span class="badge badge-price-free" id="modalEventPriceBadge">Free Entry</span>
-          <span class="spotlight-category" id="modalEventCategory">Tech & Coding</span>
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <span class="cyber-tag tag-free" id="modalEventPriceBadge">Free Entry</span>
+          <span class="section-tag-mono" id="modalEventCategory">Tech & AI</span>
         </div>
 
-        <h2 class="event-modal-title" id="modalEventTitle">Event Title</h2>
+        <h2 style="font-size: clamp(1.4rem, 2.8vw, 1.9rem); margin-bottom: 1rem;" id="modalEventTitle">Event Title</h2>
 
-        <!-- Event Live Countdown Strip -->
-        <div class="countdown-box-wrapper modal-countdown-strip">
-          <div class="countdown-title">
-            <span>Live Countdown to Event</span>
-            <span class="countdown-live-badge"><span class="pulse"></span> TICKING LIVE</span>
+        <!-- Live Countdown Strip in Modal -->
+        <div class="bento-countdown-box" style="margin-bottom: 1.5rem;">
+          <div class="countdown-bar-header">
+            <span>Countdown to Event Launch</span>
+            <span style="color: var(--accent-rose);">● LIVE TICKING</span>
           </div>
-          <div class="countdown-units">
-            <div class="countdown-unit">
-              <div class="countdown-digit" id="modalCountdownDays">00</div>
-              <div class="countdown-unit-label">Days</div>
-            </div>
-            <div class="countdown-unit">
-              <div class="countdown-digit" id="modalCountdownHours">00</div>
-              <div class="countdown-unit-label">Hours</div>
-            </div>
-            <div class="countdown-unit">
-              <div class="countdown-digit" id="modalCountdownMins">00</div>
-              <div class="countdown-unit-label">Mins</div>
-            </div>
-            <div class="countdown-unit">
-              <div class="countdown-digit" id="modalCountdownSecs">00</div>
-              <div class="countdown-unit-label">Secs</div>
-            </div>
+          <div class="countdown-dials-row">
+            <div class="countdown-dial-tile"><div class="countdown-dial-val" id="modalCountdownDays">00</div><div class="countdown-dial-lbl">Days</div></div>
+            <div class="countdown-dial-tile"><div class="countdown-dial-val" id="modalCountdownHours">00</div><div class="countdown-dial-lbl">Hours</div></div>
+            <div class="countdown-dial-tile"><div class="countdown-dial-val" id="modalCountdownMins">00</div><div class="countdown-dial-lbl">Mins</div></div>
+            <div class="countdown-dial-tile"><div class="countdown-dial-val" id="modalCountdownSecs">00</div><div class="countdown-dial-lbl">Secs</div></div>
           </div>
         </div>
 
         <!-- Meta Grid -->
-        <div class="event-modal-meta-grid">
-          <div class="meta-pill">
-            <div class="meta-pill-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div>
-              <div class="meta-pill-title">Date & Schedule</div>
-              <div class="meta-pill-val" id="modalEventDate">Date</div>
-            </div>
+        <div class="modal-meta-tiles">
+          <div class="modal-tile">
+            <div class="modal-tile-label">Date & Time</div>
+            <div class="modal-tile-val" id="modalEventDate">Date</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);" id="modalEventTime">Time</div>
           </div>
-
-          <div class="meta-pill">
-            <div class="meta-pill-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
-            <div>
-              <div class="meta-pill-title">Timing</div>
-              <div class="meta-pill-val" id="modalEventTime">Time</div>
-            </div>
+          <div class="modal-tile">
+            <div class="modal-tile-label">Venue Location</div>
+            <div class="modal-tile-val" id="modalEventVenue">Venue</div>
           </div>
-
-          <div class="meta-pill">
-            <div class="meta-pill-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            </div>
-            <div>
-              <div class="meta-pill-title">Venue Location</div>
-              <div class="meta-pill-val" id="modalEventVenue">Venue</div>
-            </div>
+          <div class="modal-tile">
+            <div class="modal-tile-label">Seat Availability</div>
+            <div class="modal-tile-val" id="modalEventSeats">Seats</div>
           </div>
-
-          <div class="meta-pill">
-            <div class="meta-pill-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
-            <div>
-              <div class="meta-pill-title">Available Seats</div>
-              <div class="meta-pill-val" id="modalEventSeats">Seats</div>
-            </div>
+          <div class="modal-tile">
+            <div class="modal-tile-label">Delegate Pass</div>
+            <div class="modal-tile-val" id="modalFooterPrice">Free</div>
           </div>
         </div>
 
         <!-- Description -->
-        <div class="modal-detail-block">
-          <h3 class="modal-block-heading">About This Event</h3>
-          <p id="modalEventFullDesc" style="color: var(--text-secondary); line-height: 1.7; font-size: 0.96rem;"></p>
+        <div class="modal-block">
+          <h3 class="modal-section-title">About This Conclave</h3>
+          <p id="modalEventFullDesc" style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;"></p>
         </div>
 
         <!-- Highlights -->
-        <div class="modal-detail-block">
-          <h3 class="modal-block-heading">Key Highlights & Perks</h3>
-          <div class="event-highlights-list" id="modalEventHighlights"></div>
+        <div class="modal-block">
+          <h3 class="modal-section-title">Key Highlights & Perks</h3>
+          <div id="modalEventHighlights" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
         </div>
 
         <!-- Schedule Timeline -->
-        <div class="modal-detail-block">
-          <h3 class="modal-block-heading">Event Schedule & Timeline</h3>
-          <div class="schedule-timeline" id="modalEventSchedule"></div>
+        <div class="modal-block">
+          <h3 class="modal-section-title">Schedule & Milestones</h3>
+          <div id="modalEventSchedule" style="display: flex; flex-direction: column; gap: 0.75rem; border-left: 2px solid var(--border-medium); padding-left: 1rem; margin-left: 0.5rem;"></div>
         </div>
 
-        <!-- Speakers / Mentors -->
-        <div class="modal-detail-block">
-          <h3 class="modal-block-heading">Featured Speakers & Mentors</h3>
-          <div class="speakers-row" id="modalEventSpeakers"></div>
+        <!-- Speakers -->
+        <div class="modal-block">
+          <h3 class="modal-section-title">Featured Speakers & Mentors</h3>
+          <div id="modalEventSpeakers" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;"></div>
         </div>
 
-        <!-- Eligibility -->
-        <div class="modal-detail-block">
-          <h3 class="modal-block-heading">Participation Guidelines</h3>
-          <p id="modalEventEligibility" style="font-size: 0.9rem; color: var(--text-muted); background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md);"></p>
+        <!-- Guidelines -->
+        <div class="modal-block">
+          <h3 class="modal-section-title">Participation Protocol</h3>
+          <p id="modalEventEligibility" style="font-size: 0.88rem; color: var(--text-muted); background: var(--bg-surface-elevated); padding: 1rem; border-radius: var(--radius-md);"></p>
         </div>
       </div>
 
-      <div class="modal-footer-sticky">
-        <div>
-          <span style="font-size: 0.8125rem; color: var(--text-muted); display: block;">Registration Fee</span>
-          <span style="font-size: 1.25rem; font-weight: 800; color: var(--brand-primary);" id="modalFooterPrice">Free</span>
-        </div>
-        <button type="button" class="btn btn-primary btn-lg" id="modalOpenRegisterBtn">
-          Register for This Event
+      <div class="modal-foot-sticky">
+        <button type="button" class="btn-card-outline" style="flex: 0 0 auto; padding: 0.75rem 1.25rem;" onclick="document.getElementById('eventDetailsModal').close()">
+          Close
+        </button>
+        <button type="button" class="btn-card-primary" style="flex: 1; max-width: 240px; padding: 0.75rem 1.25rem;" id="modalOpenRegisterBtn">
+          Register for Event
         </button>
       </div>
     </div>
   </dialog>
 
-  <!-- ========================================================================
-       MODAL 2: Interactive Registration Form (<dialog>)
-       ======================================================================== -->
+  <!-- MODAL 2: Interactive Registration Modal -->
   <dialog id="registrationModal" aria-labelledby="regModalTitle">
-    <div class="modal-container">
-      <div class="modal-header-sticky">
-        <h2 class="modal-title" id="regModalTitle">Event Registration</h2>
-        <button type="button" class="modal-close-btn" id="closeRegModalBtn" aria-label="Close Registration Form">✕</button>
+    <div class="modal-shell">
+      <div class="modal-head-sticky">
+        <h2 style="font-size: 1.25rem; font-weight: 800;" id="regModalTitle">Secure Event Registration</h2>
+        <button type="button" class="modal-close-round" id="closeRegModalBtn" aria-label="Close">✕</button>
       </div>
 
-      <div class="modal-body-scrollable">
-        <!-- Selected Event Preview inside Form -->
-        <div class="form-event-preview">
-          <img src="" alt="" class="preview-thumbnail" id="formPreviewImg">
-          <div class="preview-info">
-            <div class="preview-title" id="formPreviewTitle">Selected Event</div>
-            <div class="preview-date" id="formPreviewDate">Date & Venue</div>
+      <div class="modal-scroll-body">
+        <div class="reg-event-preview-card">
+          <img src="" alt="" class="reg-preview-img" id="formPreviewImg">
+          <div>
+            <div style="font-weight: 800; font-size: 1rem;" id="formPreviewTitle">Selected Event</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);" id="formPreviewDate">Date & Venue</div>
           </div>
         </div>
 
         <form id="registrationForm" novalidate>
-          <div class="form-grid">
-            <!-- Full Name Field -->
-            <div class="form-group full-width">
-              <label for="regFullName" class="form-label">
-                <span>Full Name <span class="required">*</span></span>
+          <div class="reg-form-grid">
+            <!-- Full Name -->
+            <div class="field-group full-col">
+              <label for="regFullName" class="field-label">
+                <span>Full Name *</span>
               </label>
-              <span id="name-hint" class="form-hint">Enter your full legal name as per student/government ID</span>
-              <input
-                type="text"
-                id="regFullName"
-                name="fullName"
-                class="form-input"
-                placeholder="e.g., Aarav Sharma"
-                required
-                minlength="3"
-                maxlength="60"
-                pattern="^[A-Za-z\s.]{3,60}$"
-                autocomplete="name"
-                aria-describedby="name-hint"
-                aria-errormessage="name-error"
-              >
-              <div id="name-error" class="field-error-msg" aria-live="polite">
-                <span>⚠️</span> Please enter at least 3 letters (alphabets and spaces only).
-              </div>
+              <input type="text" id="regFullName" name="fullName" class="field-input" placeholder="e.g., Aarav Sharma" required minlength="3" maxlength="60" pattern="^[A-Za-z\s.]{3,60}$" autocomplete="name">
+              <div id="name-error" class="field-error"><span>⚠️</span> Please enter at least 3 letters.</div>
             </div>
 
-            <!-- Email Address Field -->
-            <div class="form-group">
-              <label for="regEmail" class="form-label">
-                <span>Email Address <span class="required">*</span></span>
+            <!-- Email -->
+            <div class="field-group">
+              <label for="regEmail" class="field-label">
+                <span>Email Address *</span>
               </label>
-              <span id="email-hint" class="form-hint">Confirmation & pass sent here</span>
-              <input
-                type="email"
-                id="regEmail"
-                name="email"
-                class="form-input"
-                placeholder="name@kiit.ac.in or gmail.com"
-                required
-                autocomplete="email"
-                aria-describedby="email-hint"
-                aria-errormessage="email-error"
-              >
-              <div id="email-error" class="field-error-msg" aria-live="polite">
-                <span>⚠️</span> Please enter a valid email address.
-              </div>
+              <input type="email" id="regEmail" name="email" class="field-input" placeholder="name@kiit.ac.in or gmail.com" required autocomplete="email">
+              <div id="email-error" class="field-error"><span>⚠️</span> Please enter a valid email address.</div>
             </div>
 
-            <!-- Phone Number Field -->
-            <div class="form-group">
-              <label for="regPhone" class="form-label">
-                <span>Phone Number <span class="required">*</span></span>
+            <!-- Phone -->
+            <div class="field-group">
+              <label for="regPhone" class="field-label">
+                <span>Phone Number *</span>
               </label>
-              <span id="phone-hint" class="form-hint">10-digit Indian mobile number</span>
-              <input
-                type="tel"
-                id="regPhone"
-                name="phone"
-                class="form-input"
-                placeholder="e.g., 9876543210"
-                required
-                pattern="^[6-9]\d{9}$"
-                maxlength="10"
-                autocomplete="tel"
-                aria-describedby="phone-hint"
-                aria-errormessage="phone-error"
-              >
-              <div id="phone-error" class="field-error-msg" aria-live="polite">
-                <span>⚠️</span> Enter a valid 10-digit Indian mobile number.
-              </div>
+              <input type="tel" id="regPhone" name="phone" class="field-input" placeholder="10-digit number" required pattern="^[6-9]\d{9}$" maxlength="10">
+              <div id="phone-error" class="field-error"><span>⚠️</span> Valid 10-digit Indian number.</div>
             </div>
 
-            <!-- University / Organization Selection -->
-            <div class="form-group">
-              <label for="regCollege" class="form-label">
-                <span>Institution <span class="required">*</span></span>
+            <!-- College -->
+            <div class="field-group">
+              <label for="regCollege" class="field-label">
+                <span>Institution *</span>
               </label>
-              <select id="regCollege" name="college" class="form-select" required>
+              <select id="regCollege" name="college" class="field-select" required>
                 <option value="KIIT University (Deemed to be)">KIIT University (Bhubaneswar)</option>
-                <option value="KIMS (Medical Sciences)">KIMS Medical College</option>
+                <option value="KIMS Medical College">KIMS Medical College</option>
                 <option value="KISS Deemed University">KISS Deemed University</option>
                 <option value="IIT / NIT / IIIT">IIT / NIT / IIIT</option>
                 <option value="Other External University">Other External University</option>
               </select>
             </div>
 
-            <!-- Student ID / Roll Number -->
-            <div class="form-group">
-              <label for="regRollNo" class="form-label">
-                <span>Roll No / Student ID <span class="required">*</span></span>
+            <!-- Roll Number -->
+            <div class="field-group">
+              <label for="regRollNo" class="field-label">
+                <span>Roll No / Student ID *</span>
               </label>
-              <input
-                type="text"
-                id="regRollNo"
-                name="rollNo"
-                class="form-input"
-                placeholder="e.g., 21051234"
-                required
-                minlength="4"
-              >
-              <div id="roll-error" class="field-error-msg" aria-live="polite">
-                <span>⚠️</span> Please enter your valid student/roll number.
-              </div>
+              <input type="text" id="regRollNo" name="rollNo" class="field-input" placeholder="e.g., 21051234" required minlength="4">
+              <div id="roll-error" class="field-error"><span>⚠️</span> Please enter valid student ID.</div>
             </div>
 
-            <!-- Selected Event Dropdown (Synchronized) -->
-            <div class="form-group full-width">
-              <label for="regSelectedEvent" class="form-label">
-                <span>Selected Event <span class="required">*</span></span>
+            <!-- Selected Event Synchronizer -->
+            <div class="field-group full-col">
+              <label for="regSelectedEvent" class="field-label">
+                <span>Selected Event *</span>
               </label>
-              <select id="regSelectedEvent" name="selectedEventId" class="form-select" required>
-                <!-- Populated dynamically via JS -->
-              </select>
+              <select id="regSelectedEvent" name="selectedEventId" class="field-select" required></select>
             </div>
 
-            <!-- Ticket Category / Pass Type -->
-            <div class="form-group">
-              <label for="regTicketType" class="form-label">
-                <span>Pass Type <span class="required">*</span></span>
+            <!-- Pass Type -->
+            <div class="field-group">
+              <label for="regTicketType" class="field-label">
+                <span>Pass Tier *</span>
               </label>
-              <select id="regTicketType" name="ticketType" class="form-select" required>
+              <select id="regTicketType" name="ticketType" class="field-select" required>
                 <option value="Standard Delegate Pass">Standard Delegate Pass (Default)</option>
                 <option value="VIP Priority Access">VIP Priority Access</option>
                 <option value="Team Leader / Representative">Team Leader / Representative</option>
@@ -861,11 +700,11 @@
             </div>
 
             <!-- Year of Study -->
-            <div class="form-group">
-              <label for="regYear" class="form-label">
-                <span>Current Year of Study</span>
+            <div class="field-group">
+              <label for="regYear" class="field-label">
+                <span>Year of Study</span>
               </label>
-              <select id="regYear" name="year" class="form-select">
+              <select id="regYear" name="year" class="field-select">
                 <option value="1st Year">1st Year (Freshman)</option>
                 <option value="2nd Year">2nd Year (Sophomore)</option>
                 <option value="3rd Year" selected>3rd Year (Junior)</option>
@@ -874,29 +713,19 @@
               </select>
             </div>
 
-            <!-- Special Requirements / Notes -->
-            <div class="form-group full-width">
-              <label for="regNotes" class="form-label">
-                <span>Special Requirements (Optional)</span>
+            <!-- Terms -->
+            <div class="field-group full-col" style="margin-top: 0.5rem;">
+              <label style="display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                <input type="checkbox" id="regTerms" name="terms" required style="margin-top: 0.2rem; accent-color: var(--accent-indigo);">
+                <span>I confirm that the details entered are accurate and agree to adhere to the university attendance code and safety protocols. *</span>
               </label>
-              <textarea id="regNotes" name="notes" class="form-textarea" rows="2" placeholder="Dietary preferences, accessibility requirements, team member names, or queries..."></textarea>
-            </div>
-
-            <!-- Terms and Conduct Agreement -->
-            <div class="form-group full-width">
-              <label class="form-checkbox-label">
-                <input type="checkbox" id="regTerms" name="terms" class="form-checkbox" required>
-                <span>I confirm that the details entered are accurate and I agree to adhere to the university code of conduct, event safety protocols, and attendance terms. <span class="required">*</span></span>
-              </label>
-              <div id="terms-error" class="field-error-msg" aria-live="polite">
-                <span>⚠️</span> You must accept the terms to complete registration.
-              </div>
+              <div id="terms-error" class="field-error"><span>⚠️</span> You must accept the terms.</div>
             </div>
           </div>
 
-          <div style="margin-top: 1.75rem; display: flex; justify-content: flex-end; gap: 0.75rem;">
-            <button type="button" class="btn btn-secondary" id="cancelRegBtn">Cancel</button>
-            <button type="submit" class="btn btn-primary btn-lg" id="submitRegBtn">
+          <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button type="button" class="btn-card-outline" id="cancelRegBtn" style="flex: 0 0 auto;">Cancel</button>
+            <button type="submit" class="btn-card-primary" id="submitRegBtn" style="flex: 0 0 auto; padding: 0.75rem 1.5rem;">
               <span id="submitBtnText">Complete Registration</span>
             </button>
           </div>
@@ -905,162 +734,139 @@
     </div>
   </dialog>
 
-  <!-- ========================================================================
-       MODAL 3: Confirmation & Digital Boarding Pass Ticket (<dialog>)
-       ======================================================================== -->
+  <!-- MODAL 3: VIP Cyber Boarding Pass -->
   <dialog id="confirmationModal" aria-labelledby="confirmHeading">
-    <div class="modal-container">
-      <div class="modal-header-sticky">
-        <h2 class="modal-title" id="confirmHeading">Registration Confirmed!</h2>
-        <button type="button" class="modal-close-btn" id="closeConfirmModalBtn" aria-label="Close Confirmation Screen">✕</button>
+    <div class="modal-shell">
+      <div class="modal-head-sticky">
+        <h2 style="font-size: 1.25rem; font-weight: 800;" id="confirmHeading">Pass Confirmed & Issued</h2>
+        <button type="button" class="modal-close-round" id="closeConfirmModalBtn" aria-label="Close">✕</button>
       </div>
 
-      <div class="modal-body-scrollable">
-        <div class="confirmation-hero">
-          <div class="success-check-circle" aria-hidden="true">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+      <div class="modal-scroll-body">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <div style="display: inline-flex; align-items: center; justify-content: center; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); margin-bottom: 0.5rem;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </div>
-          <h3 class="confirmation-title">You're Officially Registered!</h3>
-          <p class="confirmation-subtitle">
-            A confirmation pass has been saved to your browser portal. Present this pass at the gate.
-          </p>
+          <h3 style="font-size: 1.4rem;">You're Officially Registered!</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">Present this secure boarding pass at the campus venue gate.</p>
         </div>
 
-        <!-- Digital Boarding Pass Ticket Component -->
-        <div class="ticket-wrapper" id="printableTicket">
-          <!-- Ticket Header -->
-          <div class="ticket-header">
-            <div class="ticket-brand">EVENT MANAGEMENT PASS</div>
-            <div class="ticket-pass-type" id="ticketPassType">Standard Pass</div>
+        <!-- VIP Boarding Pass Component -->
+        <div class="vip-pass-card" id="printableTicket">
+          <div class="vip-pass-foil-stripe"></div>
+          <div class="vip-pass-header">
+            <div class="vip-pass-brand">EVENTOS PASS // KIIT</div>
+            <div class="vip-pass-pill" id="ticketPassType">Standard Pass</div>
           </div>
 
-          <!-- Ticket Body -->
-          <div class="ticket-body">
-            <div class="ticket-event-name" id="ticketEventName">HackSprint X Hackathon</div>
-            
-            <div class="ticket-grid-details">
-              <div class="ticket-detail-item">
-                <span class="ticket-label">Attendee Name</span>
-                <span class="ticket-value" id="ticketAttendeeName">Aarav Sharma</span>
+          <div class="vip-pass-body">
+            <div class="vip-event-title" id="ticketEventName">HackSprint X Hackathon</div>
+
+            <div class="vip-details-grid">
+              <div>
+                <div class="vip-field-label">Attendee Name</div>
+                <div class="vip-field-val" id="ticketAttendeeName">Aarav Sharma</div>
               </div>
-              <div class="ticket-detail-item">
-                <span class="ticket-label">Institution</span>
-                <span class="ticket-value" id="ticketCollege">KIIT University</span>
+              <div>
+                <div class="vip-field-label">Institution</div>
+                <div class="vip-field-val" id="ticketCollege">KIIT University</div>
               </div>
-              <div class="ticket-detail-item">
-                <span class="ticket-label">Date & Time</span>
-                <span class="ticket-value" id="ticketDateTime">Nov 15, 2026</span>
+              <div>
+                <div class="vip-field-label">Date & Time</div>
+                <div class="vip-field-val" id="ticketDateTime">Nov 15, 2026</div>
               </div>
-              <div class="ticket-detail-item">
-                <span class="ticket-label">Venue</span>
-                <span class="ticket-value" id="ticketVenue">Campus 6 Auditorium</span>
+              <div>
+                <div class="vip-field-label">Venue</div>
+                <div class="vip-field-val" id="ticketVenue">Campus 6 Auditorium</div>
               </div>
-              <div class="ticket-detail-item">
-                <span class="ticket-label">Email</span>
-                <span class="ticket-value" id="ticketEmail">aarav@kiit.ac.in</span>
+              <div>
+                <div class="vip-field-label">Email</div>
+                <div class="vip-field-val" id="ticketEmail">aarav@kiit.ac.in</div>
               </div>
-              <div class="ticket-detail-item">
-                <span class="ticket-label">Phone</span>
-                <span class="ticket-value" id="ticketPhone">9876543210</span>
+              <div>
+                <div class="vip-field-label">Phone</div>
+                <div class="vip-field-val" id="ticketPhone">9876543210</div>
               </div>
             </div>
           </div>
 
-          <!-- Perforated Tear Line -->
-          <div class="ticket-tear-line">
-            <div class="ticket-dashed-border"></div>
+          <!-- Perforation -->
+          <div class="vip-notch-separator">
+            <div class="vip-dashed-line"></div>
           </div>
 
-          <!-- Ticket Footer (QR & Barcode) -->
-          <div class="ticket-footer">
-            <div class="ticket-qr-box" id="ticketQrContainer" title="Verified Pass QR Code">
-              <!-- SVG QR Code rendered dynamically -->
-            </div>
-            <div class="ticket-barcode-box">
-              <div class="ticket-label">Booking Reference</div>
-              <div class="ticket-booking-ref" id="ticketRefCode">EM-2026-94821</div>
-              <svg width="140" height="28" viewBox="0 0 140 28" fill="currentColor">
-                <!-- Barcode visual pattern -->
-                <rect x="0" y="0" width="3" height="28"></rect>
-                <rect x="6" y="0" width="2" height="28"></rect>
-                <rect x="11" y="0" width="5" height="28"></rect>
-                <rect x="19" y="0" width="1" height="28"></rect>
-                <rect x="23" y="0" width="4" height="28"></rect>
-                <rect x="30" y="0" width="2" height="28"></rect>
-                <rect x="35" y="0" width="6" height="28"></rect>
-                <rect x="44" y="0" width="2" height="28"></rect>
-                <rect x="49" y="0" width="4" height="28"></rect>
-                <rect x="56" y="0" width="1" height="28"></rect>
-                <rect x="60" y="0" width="5" height="28"></rect>
-                <rect x="68" y="0" width="3" height="28"></rect>
-                <rect x="74" y="0" width="2" height="28"></rect>
-                <rect x="79" y="0" width="6" height="28"></rect>
-                <rect x="88" y="0" width="2" height="28"></rect>
-                <rect x="93" y="0" width="3" height="28"></rect>
-                <rect x="99" y="0" width="4" height="28"></rect>
-                <rect x="106" y="0" width="2" height="28"></rect>
-                <rect x="111" y="0" width="5" height="28"></rect>
-                <rect x="119" y="0" width="2" height="28"></rect>
-                <rect x="124" y="0" width="4" height="28"></rect>
-                <rect x="131" y="0" width="2" height="28"></rect>
-                <rect x="136" y="0" width="4" height="28"></rect>
+          <div class="vip-pass-footer">
+            <div class="vip-qr-box" id="ticketQrContainer"></div>
+            <div class="vip-ref-box">
+              <div class="vip-field-label">Booking Reference</div>
+              <div class="vip-booking-code" id="ticketRefCode">EM-2026-94821</div>
+              <svg width="130" height="24" viewBox="0 0 130 24" fill="currentColor">
+                <rect x="0" y="0" width="3" height="24"></rect>
+                <rect x="5" y="0" width="2" height="24"></rect>
+                <rect x="10" y="0" width="4" height="24"></rect>
+                <rect x="18" y="0" width="1" height="24"></rect>
+                <rect x="22" y="0" width="5" height="24"></rect>
+                <rect x="30" y="0" width="2" height="24"></rect>
+                <rect x="36" y="0" width="6" height="24"></rect>
+                <rect x="45" y="0" width="2" height="24"></rect>
+                <rect x="50" y="0" width="4" height="24"></rect>
+                <rect x="58" y="0" width="2" height="24"></rect>
+                <rect x="64" y="0" width="5" height="24"></rect>
+                <rect x="72" y="0" width="3" height="24"></rect>
+                <rect x="78" y="0" width="2" height="24"></rect>
+                <rect x="84" y="0" width="5" height="24"></rect>
+                <rect x="92" y="0" width="2" height="24"></rect>
+                <rect x="97" y="0" width="4" height="24"></rect>
+                <rect x="105" y="0" width="3" height="24"></rect>
+                <rect x="111" y="0" width="5" height="24"></rect>
+                <rect x="120" y="0" width="3" height="24"></rect>
+                <rect x="126" y="0" width="4" height="24"></rect>
               </svg>
             </div>
           </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="ticket-actions-group">
-          <button type="button" class="btn btn-secondary" id="printTicketBtn" style="flex: 1;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            Print / Save Pass
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" class="btn-card-outline" id="printTicketBtn" style="flex: 1;">
+            Print / Save PDF
           </button>
-          <button type="button" class="btn btn-secondary" id="calendarTicketBtn" style="flex: 1;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Add to Calendar
+          <button type="button" class="btn-card-outline" id="calendarTicketBtn" style="flex: 1;">
+            Add to Calendar (.ics)
           </button>
         </div>
       </div>
 
-      <div class="modal-footer-sticky" style="justify-content: flex-end;">
-        <button type="button" class="btn btn-primary" id="doneConfirmBtn">
+      <div class="modal-foot-sticky" style="justify-content: flex-end;">
+        <button type="button" class="btn-card-primary" id="doneConfirmBtn" style="padding: 0.75rem 1.5rem;">
           Done & Explore More
         </button>
       </div>
     </div>
   </dialog>
 
-  <!-- ========================================================================
-       MODAL 4: "My Tickets & Registrations" Drawer/Modal (<dialog>)
-       ======================================================================== -->
+  <!-- MODAL 4: My Passes Drawer -->
   <dialog id="myTicketsModal" aria-labelledby="myTicketsHeading">
-    <div class="modal-container">
-      <div class="modal-header-sticky">
-        <h2 class="modal-title" id="myTicketsHeading">My Registrations</h2>
-        <button type="button" class="modal-close-btn" id="closeMyTicketsModalBtn" aria-label="Close My Tickets">✕</button>
+    <div class="modal-shell">
+      <div class="modal-head-sticky">
+        <h2 style="font-size: 1.25rem; font-weight: 800;" id="myTicketsHeading">My Digital Passes Vault</h2>
+        <button type="button" class="modal-close-round" id="closeMyTicketsModalBtn" aria-label="Close">✕</button>
       </div>
 
-      <div class="modal-body-scrollable">
-        <div class="tickets-list-container" id="myTicketsList">
-          <!-- Dynamically populated from LocalStorage -->
-        </div>
+      <div class="modal-scroll-body">
+        <div id="myTicketsList" style="display: flex; flex-direction: column; gap: 1rem;"></div>
       </div>
 
-      <div class="modal-footer-sticky" style="justify-content: space-between;">
-        <span style="font-size: 0.85rem; color: var(--text-muted);" id="ticketsSavedCounter">Stored in your browser</span>
-        <button type="button" class="btn btn-secondary" id="closeMyTicketsActionBtn">Close</button>
+      <div class="modal-foot-sticky" style="justify-content: space-between;">
+        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);" id="ticketsSavedCounter">Saved in browser storage</span>
+        <button type="button" class="btn-card-outline" id="closeMyTicketsActionBtn">Close</button>
       </div>
     </div>
   </dialog>
 
-  <!-- ========================================================================
-       Toast Notification System
-       ======================================================================== -->
-  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+  <!-- Toast Notification Dock -->
+  <div class="toast-dock" id="toastContainer" aria-live="polite"></div>
 
-  <!-- JavaScript Application Entrypoints -->
+  <!-- JavaScript Application Entrypoint -->
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

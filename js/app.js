@@ -1,11 +1,11 @@
 /**
- * KIIT Event Management Platform
- * Main Application Logic
- * Implements search, category filtering, real-time form validation, dialog management,
- * live countdown timers, theme switcher, digital boarding pass generation, and persistent data storage.
+ * KIIT Event Management Platform (EVENTOS)
+ * Application Engine
+ * Implements Bento Stage, Campus Zone Matrix, Dual View Modes (Grid & Timeline),
+ * Instant Search, Form Validation, Live Countdown Timers, and Persistent Pass Vault.
  */
 
-import { CATEGORIES, EVENTS_DATA, getFormattedEvent } from './events-data.js';
+import { CATEGORIES, CAMPUS_ZONES, EVENTS_DATA, getFormattedEvent } from './events-data.js';
 
 // ============================================================================
 // State Management
@@ -13,18 +13,21 @@ import { CATEGORIES, EVENTS_DATA, getFormattedEvent } from './events-data.js';
 const state = {
   events: [...EVENTS_DATA],
   currentCategory: 'all',
+  currentCampusZone: 'all',
+  currentQuickFilter: 'all',
   searchQuery: '',
   priceFilter: 'all',
   sortBy: 'upcoming',
+  viewMode: 'grid', // 'grid' | 'timeline'
   selectedEventForModal: null,
   selectedEventForReg: null,
   activeTicket: null,
   registrations: [],
   wishlist: new Set(),
-  theme: 'light'
+  theme: 'dark'
 };
 
-// LocalStorage Keys (Supports backward compatibility)
+// LocalStorage Keys
 const STORAGE_KEYS = {
   THEME: 'kiit_event_mgmt_theme',
   LEGACY_THEME: 'k_explore_theme',
@@ -35,11 +38,12 @@ const STORAGE_KEYS = {
 };
 
 // ============================================================================
-// Initialization & LocalStorage Load
+// Lifecycle Initialization
 // ============================================================================
 document.addEventListener('DOMContentLoaded', () => {
   loadSavedState();
   initTheme();
+  renderCampusZones();
   renderCategories();
   renderSpotlightEvent();
   populateRegistrationEventDropdown();
@@ -51,39 +55,38 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadSavedState() {
-  // Load Theme
   const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || localStorage.getItem(STORAGE_KEYS.LEGACY_THEME);
   if (savedTheme) {
     state.theme = savedTheme;
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    state.theme = 'light';
+  } else {
     state.theme = 'dark';
   }
 
-  // Load Registrations
   try {
     const savedRegs = localStorage.getItem(STORAGE_KEYS.REGISTRATIONS) || localStorage.getItem(STORAGE_KEYS.LEGACY_REGISTRATIONS);
     if (savedRegs) {
       state.registrations = JSON.parse(savedRegs);
     }
   } catch (err) {
-    console.error('Failed to parse registrations from localStorage', err);
+    console.error('Failed to parse registrations', err);
     state.registrations = [];
   }
 
-  // Load Wishlist
   try {
     const savedWish = localStorage.getItem(STORAGE_KEYS.WISHLIST) || localStorage.getItem(STORAGE_KEYS.LEGACY_WISHLIST);
     if (savedWish) {
       state.wishlist = new Set(JSON.parse(savedWish));
     }
   } catch (err) {
-    console.error('Failed to parse wishlist from localStorage', err);
+    console.error('Failed to parse wishlist', err);
     state.wishlist = new Set();
   }
 }
 
 // ============================================================================
-// Theme Switcher (Dark / Light Mode)
+// Theme Switcher (Obsidian Dark / Clean Studio Light)
 // ============================================================================
 function initTheme() {
   document.documentElement.setAttribute('data-theme', state.theme);
@@ -93,11 +96,11 @@ function toggleTheme() {
   state.theme = state.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', state.theme);
   localStorage.setItem(STORAGE_KEYS.THEME, state.theme);
-  showToast(`Switched to ${state.theme === 'dark' ? 'Dark' : 'Light'} Mode`, 'info');
+  showToast(`Switched to ${state.theme === 'dark' ? 'Dark Obsidian' : 'Studio Light'} Mode`, 'info');
 }
 
 // ============================================================================
-// Live Countdown Timers
+// Live Flip Countdown Timers
 // ============================================================================
 function calculateTimeRemaining(targetDate) {
   const total = Date.parse(targetDate) - Date.parse(new Date());
@@ -117,7 +120,7 @@ function formatTwoDigits(n) {
 
 function startGlobalCountdowns() {
   setInterval(() => {
-    // 1. Spotlight Event
+    // 1. Spotlight Event in Hero Bento
     const spotlightEvent = state.events.find(e => e.featured) || state.events[0];
     if (spotlightEvent) {
       const t = calculateTimeRemaining(spotlightEvent.targetDate);
@@ -132,7 +135,7 @@ function startGlobalCountdowns() {
       if (secsEl) secsEl.textContent = formatTwoDigits(t.seconds);
     }
 
-    // 2. Event Details Modal (if open and active)
+    // 2. Modal Countdown (if open)
     if (state.selectedEventForModal) {
       const tModal = calculateTimeRemaining(state.selectedEventForModal.targetDate);
       const mDays = document.getElementById('modalCountdownDays');
@@ -149,22 +152,60 @@ function startGlobalCountdowns() {
 }
 
 // ============================================================================
-// Spotlight Event Setup
+// Render Spotlight in Hero Bento
 // ============================================================================
 function renderSpotlightEvent() {
   const spotlight = state.events.find(e => e.featured) || state.events[0];
   if (!spotlight) return;
 
   const fEvent = getFormattedEvent(spotlight);
-  document.getElementById('spotlightTitle').textContent = fEvent.title;
-  document.getElementById('spotlightDesc').textContent = fEvent.shortDescription;
-  document.getElementById('spotlightCategory').textContent = fEvent.categoryLabel;
-  document.getElementById('spotlightVenue').textContent = fEvent.locationShort;
-  document.getElementById('spotlightImg').src = fEvent.image;
-  document.getElementById('spotlightImg').alt = fEvent.title;
+  const titleEl = document.getElementById('spotlightTitle');
+  const descEl = document.getElementById('spotlightDesc');
+  const catEl = document.getElementById('spotlightCategory');
+  const venueEl = document.getElementById('spotlightVenue');
+  const imgEl = document.getElementById('spotlightImg');
 
-  document.getElementById('spotlightDetailsBtn').onclick = () => openEventDetailsModal(spotlight.id);
-  document.getElementById('spotlightRegisterBtn').onclick = () => openRegistrationModal(spotlight.id);
+  if (titleEl) titleEl.textContent = fEvent.title;
+  if (descEl) descEl.textContent = fEvent.shortDescription;
+  if (catEl) catEl.textContent = fEvent.categoryLabel;
+  if (venueEl) venueEl.textContent = fEvent.locationShort;
+  if (imgEl) {
+    imgEl.src = fEvent.image;
+    imgEl.alt = fEvent.title;
+  }
+
+  const detailsBtn = document.getElementById('spotlightDetailsBtn');
+  const regBtn = document.getElementById('spotlightRegisterBtn');
+  if (detailsBtn) detailsBtn.onclick = () => openEventDetailsModal(spotlight.id);
+  if (regBtn) regBtn.onclick = () => openRegistrationModal(spotlight.id);
+}
+
+// ============================================================================
+// Render Campus Zone Matrix Selector
+// ============================================================================
+function renderCampusZones() {
+  const row = document.getElementById('campusZonePillsRow');
+  if (!row) return;
+
+  row.innerHTML = CAMPUS_ZONES.map(zone => {
+    const isActive = state.currentCampusZone === zone.id;
+    return `
+      <button type="button" class="campus-zone-pill ${isActive ? 'active' : ''}" data-zone="${zone.id}">
+        <span class="zone-pill-title">${zone.name}</span>
+        <span class="zone-pill-sub">${zone.label}</span>
+      </button>
+    `;
+  }).join('');
+
+  row.querySelectorAll('.campus-zone-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const zId = btn.getAttribute('data-zone');
+      state.currentCampusZone = zId;
+      renderCampusZones();
+      renderEvents();
+      document.getElementById('events').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
 }
 
 // ============================================================================
@@ -177,16 +218,16 @@ function renderCategories() {
   row.innerHTML = CATEGORIES.map(cat => {
     const isActive = state.currentCategory === cat.id;
     return `
-      <button type="button" class="category-pill ${isActive ? 'active' : ''}" data-category="${cat.id}" role="tab" aria-selected="${isActive}">
+      <button type="button" class="category-filter-btn ${isActive ? 'active' : ''}" data-category="${cat.id}">
+        <span>${cat.icon}</span>
         <span>${cat.label}</span>
       </button>
     `;
   }).join('');
 
-  row.querySelectorAll('.category-pill').forEach(btn => {
+  row.querySelectorAll('.category-filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const catId = btn.getAttribute('data-category');
-      state.currentCategory = catId;
+      state.currentCategory = btn.getAttribute('data-category');
       renderCategories();
       renderEvents();
     });
@@ -194,24 +235,38 @@ function renderCategories() {
 }
 
 // ============================================================================
-// Filter, Search, Sort & Render Event Cards
+// Filter, Search, Sort & Render Engine
 // ============================================================================
 function getFilteredAndSortedEvents() {
   let list = [...state.events];
 
-  // 1. Category Filter
+  // 1. Campus Zone Filter
+  if (state.currentCampusZone !== 'all') {
+    list = list.filter(e => e.campusZone === state.currentCampusZone);
+  }
+
+  // 2. Category Filter
   if (state.currentCategory !== 'all') {
     list = list.filter(e => e.category === state.currentCategory);
   }
 
-  // 2. Price Filter
+  // 3. Price Filter
   if (state.priceFilter === 'free') {
     list = list.filter(e => e.isFree);
   } else if (state.priceFilter === 'paid') {
     list = list.filter(e => !e.isFree);
   }
 
-  // 3. Search Query Filter
+  // 4. Quick Filter
+  if (state.currentQuickFilter === 'free') {
+    list = list.filter(e => e.isFree);
+  } else if (state.currentQuickFilter === 'week') {
+    list = list.filter(e => getFormattedEvent(e).daysLeft <= 7);
+  } else if (state.currentQuickFilter === 'fast') {
+    list = list.filter(e => e.registeredCount / e.capacity >= 0.8);
+  }
+
+  // 5. Search Query Filter
   if (state.searchQuery.trim() !== '') {
     const q = state.searchQuery.toLowerCase();
     list = list.filter(e => 
@@ -222,7 +277,7 @@ function getFilteredAndSortedEvents() {
     );
   }
 
-  // 4. Sorting
+  // 6. Sorting
   if (state.sortBy === 'upcoming') {
     list.sort((a, b) => a.targetDate - b.targetDate);
   } else if (state.sortBy === 'popular') {
@@ -237,7 +292,7 @@ function getFilteredAndSortedEvents() {
 }
 
 function renderEvents() {
-  const grid = document.getElementById('eventsGrid');
+  const container = document.getElementById('eventsGrid');
   const countEl = document.getElementById('visibleEventsCount');
   const totalEl = document.getElementById('totalEventsCount');
   const resetBtn = document.getElementById('resetFiltersBtn');
@@ -248,100 +303,152 @@ function renderEvents() {
   if (totalEl) totalEl.textContent = state.events.length;
 
   const hasActiveFilters = state.currentCategory !== 'all' || 
+                           state.currentCampusZone !== 'all' || 
                            state.priceFilter !== 'all' || 
+                           state.currentQuickFilter !== 'all' || 
                            state.searchQuery.trim() !== '' || 
                            state.sortBy !== 'upcoming';
   if (resetBtn) {
-    resetBtn.style.display = hasActiveFilters ? 'inline-flex' : 'none';
+    resetBtn.style.display = hasActiveFilters ? 'inline-block' : 'none';
   }
 
+  // Apply container class for Grid vs Timeline View
+  container.className = `events-display-container ${state.viewMode === 'grid' ? 'grid-mode' : 'timeline-mode'}`;
+
   if (filteredEvents.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    container.innerHTML = `
+      <div class="empty-events-box">
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           <line x1="8" y1="11" x2="14" y2="11"></line>
         </svg>
-        <h3 class="empty-state-title">No Events Found</h3>
-        <p class="empty-state-desc">We couldn't find any events matching your selected criteria. Try adjusting your search term or filters.</p>
-        <button type="button" class="btn btn-primary" id="emptyStateResetBtn">Reset All Filters</button>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">No Events Found</h3>
+        <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 1.5rem auto;">
+          We couldn't locate any events matching your selected campus or search filters.
+        </p>
+        <button type="button" class="btn-card-primary" style="display: inline-block; padding: 0.75rem 1.5rem;" id="emptyResetBtn">
+          Reset All Filters
+        </button>
       </div>
     `;
-    const emptyBtn = document.getElementById('emptyStateResetBtn');
+    const emptyBtn = document.getElementById('emptyResetBtn');
     if (emptyBtn) emptyBtn.addEventListener('click', resetAllFilters);
     return;
   }
 
-  grid.innerHTML = filteredEvents.map(event => {
-    const fEvent = getFormattedEvent(event);
-    const isSaved = state.wishlist.has(event.id);
-    const badgeClass = event.featured ? 'badge-featured' : (event.registeredCount > event.capacity * 0.85 ? 'badge-selling' : 'badge-soon');
-    const priceBadge = event.isFree ? '<span class="badge badge-price-free">Free</span>' : `<span class="badge badge-price-paid">${event.price}</span>`;
+  // RENDER VIEW 1: Grid Mode
+  if (state.viewMode === 'grid') {
+    container.innerHTML = filteredEvents.map(event => {
+      const fEvent = getFormattedEvent(event);
+      const isSaved = state.wishlist.has(event.id);
+      const tagClass = event.featured ? 'tag-flagship' : (fEvent.percentFull > 85 ? 'tag-selling' : 'tag-paid');
+      const priceTag = event.isFree ? '<span class="cyber-tag tag-free">Free Pass</span>' : `<span class="cyber-tag tag-paid">${event.price}</span>`;
 
-    return `
-      <article class="event-card" data-id="${event.id}">
-        <div class="event-card-media">
-          <img src="${event.image}" alt="${event.title}" class="event-card-img" loading="lazy">
-          <div class="event-card-tags">
-            <span class="badge ${badgeClass}">${event.badge}</span>
-            ${priceBadge}
-          </div>
-          <button type="button" class="bookmark-btn ${isSaved ? 'saved' : ''}" data-wishlist-id="${event.id}" aria-label="${isSaved ? 'Remove from wishlist' : 'Save to wishlist'}" title="${isSaved ? 'Remove from Wishlist' : 'Add to Wishlist'}">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-          </button>
-        </div>
+      return `
+        <article class="cyber-card" data-id="${event.id}">
+          <div class="cyber-card-media">
+            <img src="${event.image}" alt="${event.title}" class="cyber-card-img" loading="lazy">
+            <div class="cyber-card-media-overlay">
+              <div class="cyber-card-top-tags">
+                <div class="date-calendar-pill">
+                  <span class="date-pill-day">${fEvent.dayNumber}</span>
+                  <span class="date-pill-month">${fEvent.monthShort}</span>
+                </div>
+                <button type="button" class="cyber-card-bookmark ${isSaved ? 'saved' : ''}" data-wishlist-id="${event.id}" title="${isSaved ? 'Remove Bookmark' : 'Bookmark Event'}">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                </button>
+              </div>
 
-        <div class="event-card-content">
-          <div class="event-date-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <span>${fEvent.formattedDate} • ${fEvent.formattedTime}</span>
-          </div>
-
-          <h3 class="event-card-title">${event.title}</h3>
-
-          <div class="event-venue-row">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>${event.locationShort}</span>
-          </div>
-
-          <p class="event-card-desc">${event.shortDescription}</p>
-
-          <div class="capacity-container">
-            <div class="capacity-meta">
-              <span>Capacity</span>
-              <span><strong>${fEvent.seatsRemaining}</strong> seats left (${fEvent.percentFull}% full)</span>
-            </div>
-            <div class="capacity-bar-track">
-              <div class="capacity-bar-fill" style="width: ${fEvent.percentFull}%"></div>
+              <div class="cyber-card-bottom-tags">
+                <span class="cyber-tag ${tagClass}">${event.badge}</span>
+                ${priceTag}
+              </div>
             </div>
           </div>
 
-          <div class="event-card-actions">
-            <button type="button" class="btn btn-secondary btn-sm btn-view-details" data-id="${event.id}">
+          <div class="cyber-card-body">
+            <div class="cyber-card-meta">
+              <span>${fEvent.categoryLabel}</span>
+              <span>•</span>
+              <span>${fEvent.formattedTime}</span>
+            </div>
+
+            <h3 class="cyber-card-title">${event.title}</h3>
+
+            <div class="cyber-card-venue">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>${event.locationShort}</span>
+            </div>
+
+            <p class="cyber-card-desc">${event.shortDescription}</p>
+
+            <div class="cyber-capacity-block">
+              <div class="capacity-head-row">
+                <span>Capacity</span>
+                <span><strong>${fEvent.seatsRemaining}</strong> left (${fEvent.percentFull}% full)</span>
+              </div>
+              <div class="capacity-track">
+                <div class="capacity-progress" style="width: ${fEvent.percentFull}%"></div>
+              </div>
+            </div>
+
+            <div class="cyber-card-actions">
+              <button type="button" class="btn-card-outline btn-view-details" data-id="${event.id}">
+                Details
+              </button>
+              <button type="button" class="btn-card-primary btn-quick-reg" data-id="${event.id}">
+                Register
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+  } 
+  // RENDER VIEW 2: Timeline / List Mode
+  else {
+    container.innerHTML = filteredEvents.map(event => {
+      const fEvent = getFormattedEvent(event);
+      return `
+        <article class="timeline-event-row" data-id="${event.id}">
+          <div class="timeline-row-media">
+            <img src="${event.image}" alt="${event.title}" class="timeline-row-img" loading="lazy">
+          </div>
+          <div class="timeline-row-info">
+            <div class="timeline-row-time">
+              📅 ${fEvent.formattedDate} • ⏰ ${fEvent.timeRange}
+            </div>
+            <h3 class="timeline-row-title">${event.title}</h3>
+            <div class="timeline-row-venue">
+              📍 ${event.venue} &nbsp;|&nbsp; 🎫 ${event.isFree ? 'Free Access' : event.price} &nbsp;|&nbsp; ⚡ ${fEvent.seatsRemaining} seats left
+            </div>
+          </div>
+          <div class="timeline-row-actions">
+            <button type="button" class="btn-card-outline btn-view-details" data-id="${event.id}" style="padding: 0.6rem 1rem;">
               Details
             </button>
-            <button type="button" class="btn btn-primary btn-sm btn-quick-reg" data-id="${event.id}">
-              Register
+            <button type="button" class="btn-card-primary btn-quick-reg" data-id="${event.id}" style="padding: 0.6rem 1.25rem;">
+              Get Pass
             </button>
           </div>
-        </div>
-      </article>
-    `;
-  }).join('');
+        </article>
+      `;
+    }).join('');
+  }
 
-  // Attach card button handlers
-  grid.querySelectorAll('.btn-view-details').forEach(btn => {
+  // Attach card interaction listeners
+  container.querySelectorAll('.btn-view-details').forEach(btn => {
     btn.addEventListener('click', () => openEventDetailsModal(btn.getAttribute('data-id')));
   });
 
-  grid.querySelectorAll('.btn-quick-reg').forEach(btn => {
+  container.querySelectorAll('.btn-quick-reg').forEach(btn => {
     btn.addEventListener('click', () => openRegistrationModal(btn.getAttribute('data-id')));
   });
 
-  grid.querySelectorAll('.bookmark-btn').forEach(btn => {
+  container.querySelectorAll('.cyber-card-bookmark').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const id = btn.getAttribute('data-wishlist-id');
@@ -352,6 +459,8 @@ function renderEvents() {
 
 function resetAllFilters() {
   state.currentCategory = 'all';
+  state.currentCampusZone = 'all';
+  state.currentQuickFilter = 'all';
   state.priceFilter = 'all';
   state.sortBy = 'upcoming';
   state.searchQuery = '';
@@ -366,13 +475,14 @@ function resetAllFilters() {
   if (sortSelect) sortSelect.value = 'upcoming';
   if (clearBtn) clearBtn.classList.remove('visible');
 
+  renderCampusZones();
   renderCategories();
   renderEvents();
   showToast('All filters have been reset', 'info');
 }
 
 // ============================================================================
-// Wishlist / Bookmarking
+// Wishlist Bookmark Management
 // ============================================================================
 function toggleWishlist(eventId) {
   const event = state.events.find(e => e.id === eventId);
@@ -380,10 +490,10 @@ function toggleWishlist(eventId) {
 
   if (state.wishlist.has(eventId)) {
     state.wishlist.delete(eventId);
-    showToast(`Removed "${event.title.substring(0, 22)}..." from saved events`, 'info');
+    showToast(`Removed "${event.title.substring(0, 20)}..." from saved events`, 'info');
   } else {
     state.wishlist.add(eventId);
-    showToast(`Saved "${event.title.substring(0, 22)}..." to your wishlist! ❤️`, 'success');
+    showToast(`Saved "${event.title.substring(0, 20)}..." to your vault! ❤️`, 'success');
   }
 
   localStorage.setItem(STORAGE_KEYS.WISHLIST, JSON.stringify(Array.from(state.wishlist)));
@@ -401,63 +511,60 @@ function openEventDetailsModal(eventId) {
   const fEvent = getFormattedEvent(event);
   const modal = document.getElementById('eventDetailsModal');
 
-  // Fill in modal details
   document.getElementById('modalEventTitle').textContent = fEvent.title;
   document.getElementById('modalEventBanner').src = fEvent.image;
   document.getElementById('modalEventBanner').alt = fEvent.title;
   document.getElementById('modalEventBadge').textContent = fEvent.badge;
   document.getElementById('modalEventCategory').textContent = fEvent.categoryLabel;
-  document.getElementById('modalEventPriceBadge').textContent = fEvent.isFree ? 'Free Entry' : fEvent.price;
+  document.getElementById('modalEventPriceBadge').textContent = fEvent.isFree ? 'Free Pass' : fEvent.price;
   document.getElementById('modalEventDate').textContent = fEvent.formattedDate;
   document.getElementById('modalEventTime').textContent = fEvent.timeRange;
   document.getElementById('modalEventVenue').textContent = fEvent.venue;
   document.getElementById('modalEventSeats').textContent = `${fEvent.seatsRemaining} of ${fEvent.capacity} remaining`;
   document.getElementById('modalEventFullDesc').textContent = fEvent.fullDescription;
   document.getElementById('modalEventEligibility').textContent = fEvent.eligibility;
-  document.getElementById('modalFooterPrice').textContent = fEvent.isFree ? 'Free Entry' : fEvent.price;
+  document.getElementById('modalFooterPrice').textContent = fEvent.isFree ? 'Free Access' : fEvent.price;
 
-  // Render Highlights
+  // Highlights
   const highlightsEl = document.getElementById('modalEventHighlights');
   highlightsEl.innerHTML = fEvent.highlights.map(h => `
-    <div class="highlight-item">
+    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.92rem; color: var(--text-secondary);">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
       <span>${h}</span>
     </div>
   `).join('');
 
-  // Render Schedule
+  // Schedule Timeline
   const scheduleEl = document.getElementById('modalEventSchedule');
   scheduleEl.innerHTML = fEvent.schedule.map(s => `
-    <div class="schedule-item">
-      <div class="schedule-time">${s.time}</div>
-      <div class="schedule-act">${s.activity}</div>
+    <div>
+      <div style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--accent-cyan);">${s.time}</div>
+      <div style="font-size: 0.92rem; color: var(--text-main);">${s.activity}</div>
     </div>
   `).join('');
 
-  // Render Speakers
+  // Speakers
   const speakersEl = document.getElementById('modalEventSpeakers');
   speakersEl.innerHTML = fEvent.speakers.map(sp => `
-    <div class="speaker-card">
-      <img src="${sp.avatar}" alt="${sp.name}" class="speaker-avatar">
+    <div style="display: flex; align-items: center; gap: 0.75rem; background: var(--bg-surface-elevated); padding: 0.75rem; border-radius: var(--radius-md);">
+      <img src="${sp.avatar}" alt="${sp.name}" style="width: 2.75rem; height: 2.75rem; border-radius: 50%; object-fit: cover;">
       <div>
-        <div class="speaker-name">${sp.name}</div>
-        <div class="speaker-role">${sp.role}</div>
+        <div style="font-weight: 700; font-size: 0.92rem;">${sp.name}</div>
+        <div style="font-size: 0.76rem; color: var(--text-muted);">${sp.role}</div>
       </div>
     </div>
   `).join('');
 
-  // Primary Register CTA in Modal Footer
   document.getElementById('modalOpenRegisterBtn').onclick = () => {
     modal.close();
     openRegistrationModal(event.id);
   };
 
-  // Open modal native
   modal.showModal();
 }
 
 // ============================================================================
-// MODAL 2: Interactive Registration Modal & Form Validation
+// MODAL 2: Interactive Registration Modal & Validation
 // ============================================================================
 function populateRegistrationEventDropdown() {
   const select = document.getElementById('regSelectedEvent');
@@ -501,7 +608,7 @@ function updateRegistrationPreview(event) {
 function clearFormValidationFeedback() {
   const form = document.getElementById('registrationForm');
   if (!form) return;
-  form.querySelectorAll('.form-group').forEach(grp => grp.classList.remove('has-error'));
+  form.querySelectorAll('.field-group').forEach(grp => grp.classList.remove('has-error'));
 }
 
 function validateFormInputs(formData) {
@@ -512,32 +619,27 @@ function validateFormInputs(formData) {
   const rollNo = formData.get('rollNo')?.trim() || '';
   const terms = formData.get('terms');
 
-  // Name validation: min 3 chars, letters/spaces only
   const nameRegex = /^[A-Za-z\s.]{3,60}$/;
   if (!name || !nameRegex.test(name)) {
-    errors.fullName = 'Please enter a valid full name (at least 3 alphabetic characters).';
+    errors.fullName = 'Please enter a valid full name.';
   }
 
-  // Email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     errors.email = 'Please provide a valid email address.';
   }
 
-  // Phone validation: 10 digit Indian number
   const phoneRegex = /^[6-9]\d{9}$/;
   if (!phone || !phoneRegex.test(phone)) {
-    errors.phone = 'Please provide a valid 10-digit Indian mobile number (starting with 6-9).';
+    errors.phone = 'Please provide a valid 10-digit Indian phone number.';
   }
 
-  // Roll number validation
   if (!rollNo || rollNo.length < 3) {
-    errors.rollNo = 'Please enter your student roll number or ID.';
+    errors.rollNo = 'Please enter valid student ID.';
   }
 
-  // Terms agreement validation
   if (!terms) {
-    errors.terms = 'You must agree to the event attendance terms.';
+    errors.terms = 'You must agree to the attendance terms.';
   }
 
   return errors;
@@ -555,25 +657,24 @@ function handleRegistrationSubmit(e) {
     for (const [fieldName, message] of Object.entries(errors)) {
       const field = form.querySelector(`[name="${fieldName}"]`);
       if (field) {
-        const group = field.closest('.form-group');
+        const group = field.closest('.field-group');
         if (group) {
           group.classList.add('has-error');
-          const errorMsg = group.querySelector('.field-error-msg');
+          const errorMsg = group.querySelector('.field-error');
           if (errorMsg) errorMsg.innerHTML = `<span>⚠️</span> ${message}`;
         }
       }
     }
     const firstInvalid = form.querySelector('.has-error input, .has-error select');
     if (firstInvalid) firstInvalid.focus();
-    showToast('Please correct the highlighted fields before submitting', 'error');
+    showToast('Please correct highlighted fields before submitting', 'error');
     return;
   }
 
-  // Submit button visual feedback
   const submitBtn = document.getElementById('submitRegBtn');
   const submitText = document.getElementById('submitBtnText');
   submitBtn.disabled = true;
-  submitText.textContent = 'Generating Verified Pass...';
+  submitText.textContent = 'Minting Secure Pass...';
 
   setTimeout(() => {
     submitBtn.disabled = false;
@@ -601,31 +702,26 @@ function handleRegistrationSubmit(e) {
       year: formData.get('year')
     };
 
-    // Save ticket to state & LocalStorage
     state.registrations.unshift(newTicket);
     localStorage.setItem(STORAGE_KEYS.REGISTRATIONS, JSON.stringify(state.registrations));
 
-    // Increment event attendee count
     registeredEvent.registeredCount = Math.min(registeredEvent.capacity, registeredEvent.registeredCount + 1);
 
-    // Close registration modal & reset form
     form.reset();
     document.getElementById('registrationModal').close();
 
-    // Re-render UI & counters
     renderEvents();
     updateTicketsBadge();
 
-    // Show Confirmation Modal with Ticket & trigger confetti
     state.activeTicket = newTicket;
     openConfirmationModal(newTicket);
     triggerCelebratoryConfetti();
-    showToast(`Registration Successful! Pass ${bookingCode} issued.`, 'success');
+    showToast(`Pass ${bookingCode} issued successfully!`, 'success');
   }, 600);
 }
 
 // ============================================================================
-// MODAL 3: Confirmation Screen & Digital Boarding Pass
+// MODAL 3: VIP Cyber Boarding Pass Modal
 // ============================================================================
 function openConfirmationModal(ticket) {
   state.activeTicket = ticket;
@@ -641,7 +737,6 @@ function openConfirmationModal(ticket) {
   document.getElementById('ticketPhone').textContent = ticket.phone;
   document.getElementById('ticketRefCode').textContent = ticket.bookingCode;
 
-  // Render SVG QR Code
   renderSvgQrCode('ticketQrContainer', ticket.bookingCode);
 
   modal.showModal();
@@ -686,7 +781,7 @@ function addCurrentTicketToCalendar() {
     'PRODID:-//KIIT University//Event Management Portal//EN',
     'BEGIN:VEVENT',
     `SUMMARY:${t.eventTitle}`,
-    `DESCRIPTION:Pass Code: ${t.bookingCode}\\nAttendee: ${t.fullName}\\nPass Type: ${t.ticketType}`,
+    `DESCRIPTION:Pass: ${t.bookingCode}\\nAttendee: ${t.fullName}\\nPass Type: ${t.ticketType}`,
     `LOCATION:${t.eventVenue}`,
     `STATUS:CONFIRMED`,
     'END:VEVENT',
@@ -705,7 +800,7 @@ function addCurrentTicketToCalendar() {
 }
 
 // ============================================================================
-// MODAL 4: "My Tickets" Management (Stored in LocalStorage)
+// MODAL 4: Digital Passes Vault Drawer
 // ============================================================================
 function updateTicketsBadge() {
   const count = state.registrations.length;
@@ -721,19 +816,20 @@ function openMyTicketsModal() {
   const counter = document.getElementById('ticketsSavedCounter');
 
   if (counter) {
-    counter.textContent = `${state.registrations.length} pass${state.registrations.length === 1 ? '' : 'es'} stored in browser`;
+    counter.textContent = `${state.registrations.length} pass${state.registrations.length === 1 ? '' : 'es'} in your browser vault`;
   }
 
   if (state.registrations.length === 0) {
     container.innerHTML = `
-      <div class="empty-state" style="padding: 3rem 1rem;">
-        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-        </svg>
-        <h3 class="empty-state-title">No Registered Passes Yet</h3>
-        <p class="empty-state-desc">You haven't registered for any events yet. Explore upcoming campus hackathons, fests, and workshops to book your spot!</p>
-        <button type="button" class="btn btn-primary btn-sm" id="emptyExploreBtn">Explore Events Now</button>
+      <div style="text-align: center; padding: 3.5rem 1rem;">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎟️</div>
+        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">No Passes Claimed Yet</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto 1.5rem auto;">
+          Browse upcoming campus hackathons and conclaves to reserve your delegate pass.
+        </p>
+        <button type="button" class="btn-card-primary" id="emptyExploreBtn" style="display: inline-block; padding: 0.75rem 1.5rem;">
+          Explore Events Now
+        </button>
       </div>
     `;
     const exploreBtn = document.getElementById('emptyExploreBtn');
@@ -745,20 +841,23 @@ function openMyTicketsModal() {
     }
   } else {
     container.innerHTML = state.registrations.map((ticket, index) => `
-      <div class="my-ticket-card">
-        <div class="my-ticket-info">
-          <div class="my-ticket-title">${ticket.eventTitle}</div>
-          <div class="my-ticket-meta">
-            <span>📅 ${ticket.eventDate}</span>
-            <span>📍 ${ticket.eventVenue}</span>
-            <span>🎫 ${ticket.bookingCode}</span>
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <div style="font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;">${ticket.eventTitle}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+              📅 ${ticket.eventDate} &nbsp;|&nbsp; 📍 ${ticket.eventVenue}
+            </div>
           </div>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); font-weight: 700;">
+            ${ticket.bookingCode}
+          </span>
         </div>
-        <div class="my-ticket-actions">
-          <button type="button" class="btn btn-secondary btn-sm btn-view-pass" data-index="${index}">
-            View Pass
+        <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.5rem;">
+          <button type="button" class="btn-card-outline btn-view-pass" data-index="${index}" style="padding: 0.45rem 1rem; font-size: 0.82rem;">
+            View QR Pass
           </button>
-          <button type="button" class="btn btn-outline btn-sm btn-cancel-ticket" data-index="${index}" style="color: var(--brand-accent); border-color: var(--brand-accent);">
+          <button type="button" class="btn-card-outline btn-cancel-ticket" data-index="${index}" style="padding: 0.45rem 0.9rem; font-size: 0.82rem; color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.4);">
             Cancel
           </button>
         </div>
@@ -847,16 +946,16 @@ function triggerCelebratoryConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const colors = ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ec4899', '#7c3aed'];
-  const confettiCount = 140;
+  const colors = ['#06b6d4', '#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899'];
+  const confettiCount = 150;
   const particles = [];
 
   for (let i = 0; i < confettiCount; i++) {
     particles.push({
       x: canvas.width * 0.5,
       y: canvas.height * 0.4,
-      w: Math.random() * 9 + 4,
-      h: Math.random() * 9 + 4,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 8 + 4,
       vx: (Math.random() - 0.5) * 16,
       vy: Math.random() * -14 - 4,
       rot: Math.random() * 360,
@@ -907,52 +1006,91 @@ function showToast(message, type = 'info') {
   if (!container) return;
 
   const toast = document.createElement('div');
-  toast.className = `toast toast-${type}`;
+  toast.className = `cyber-toast toast-${type}`;
   
-  const icon = type === 'success' ? '✅' : (type === 'error' ? '❌' : 'ℹ️');
+  const icon = type === 'success' ? '⚡' : (type === 'error' ? '❌' : 'ℹ️');
 
   toast.innerHTML = `
-    <span class="toast-icon">${icon}</span>
-    <div class="toast-body">
-      <div class="toast-title" style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${type}</div>
-      <div class="toast-msg">${message}</div>
-    </div>
+    <span>${icon}</span>
+    <div>${message}</div>
   `;
 
   container.appendChild(toast);
 
   setTimeout(() => {
     toast.style.opacity = '0';
-    toast.style.transform = 'translateX(40px)';
+    toast.style.transform = 'translateY(15px)';
     setTimeout(() => {
       if (toast.parentNode) toast.parentNode.removeChild(toast);
     }, 300);
   }, 3500);
 }
 
-// Global Newsletter subscriber handler
-window.subscribeNewsletter = function(e) {
-  const emailInput = document.getElementById('newsletterEmail');
-  if (emailInput && emailInput.value) {
-    showToast(`Subscribed ${emailInput.value}! You'll receive weekly campus event alerts.`, 'success');
-    emailInput.value = '';
-  }
-};
-
 // ============================================================================
-// Event Listeners & Light Dismiss Handling
+// Event Listeners & Interactions
 // ============================================================================
 function initEventListeners() {
-  // Theme Toggle Button
+  // Theme Toggle
   const themeBtn = document.getElementById('themeToggleBtn');
   if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 
-  // Search Input
-  const searchInput = document.getElementById('searchInput');
-  const searchClearBtn = document.getElementById('searchClearBtn');
+  // View Switcher (Grid vs Timeline)
+  const gridBtn = document.getElementById('viewModeGridBtn');
+  const listBtn = document.getElementById('viewModeListBtn');
 
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
+  if (gridBtn && listBtn) {
+    gridBtn.addEventListener('click', () => {
+      state.viewMode = 'grid';
+      gridBtn.classList.add('active');
+      listBtn.classList.remove('active');
+      renderEvents();
+    });
+
+    listBtn.addEventListener('click', () => {
+      state.viewMode = 'timeline';
+      listBtn.classList.add('active');
+      gridBtn.classList.remove('active');
+      renderEvents();
+    });
+  }
+
+  // Hero Fast Search Input & Button
+  const heroFastInput = document.getElementById('heroFastSearchInput');
+  const heroFastBtn = document.getElementById('heroFastSearchBtn');
+  const mainSearchInput = document.getElementById('searchInput');
+
+  function triggerHeroSearch() {
+    if (heroFastInput && mainSearchInput) {
+      state.searchQuery = heroFastInput.value.trim();
+      mainSearchInput.value = state.searchQuery;
+      renderEvents();
+      document.getElementById('events').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  if (heroFastBtn) heroFastBtn.addEventListener('click', triggerHeroSearch);
+  if (heroFastInput) {
+    heroFastInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') triggerHeroSearch();
+    });
+  }
+
+  // Hot Tag Chips
+  document.querySelectorAll('.hero-tag-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const tag = chip.getAttribute('data-tag');
+      state.searchQuery = tag;
+      if (mainSearchInput) mainSearchInput.value = tag;
+      if (heroFastInput) heroFastInput.value = tag;
+      renderEvents();
+      document.getElementById('events').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Dock Search Input
+  const searchClearBtn = document.getElementById('searchClearBtn');
+  if (mainSearchInput) {
+    mainSearchInput.addEventListener('input', (e) => {
       state.searchQuery = e.target.value;
       if (searchClearBtn) {
         searchClearBtn.classList.toggle('visible', state.searchQuery.length > 0);
@@ -963,14 +1101,14 @@ function initEventListeners() {
 
   if (searchClearBtn) {
     searchClearBtn.addEventListener('click', () => {
-      searchInput.value = '';
+      mainSearchInput.value = '';
       state.searchQuery = '';
       searchClearBtn.classList.remove('visible');
       renderEvents();
     });
   }
 
-  // Price Filter
+  // Price & Sort Dropdowns
   const priceFilter = document.getElementById('priceFilter');
   if (priceFilter) {
     priceFilter.addEventListener('change', (e) => {
@@ -979,7 +1117,6 @@ function initEventListeners() {
     });
   }
 
-  // Sort Selector
   const sortSelector = document.getElementById('sortSelector');
   if (sortSelector) {
     sortSelector.addEventListener('change', (e) => {
@@ -988,19 +1125,23 @@ function initEventListeners() {
     });
   }
 
-  // Reset Filters Button
+  // Quick Filter Badges
+  document.querySelectorAll('.quick-filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.quick-filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      state.currentQuickFilter = chip.getAttribute('data-quick');
+      renderEvents();
+    });
+  });
+
+  // Reset Filters
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
   if (resetFiltersBtn) {
     resetFiltersBtn.addEventListener('click', resetAllFilters);
   }
 
-  // Hero Quick Register
-  const heroQuickReg = document.getElementById('heroQuickRegisterBtn');
-  if (heroQuickReg) {
-    heroQuickReg.addEventListener('click', () => openRegistrationModal());
-  }
-
-  // My Tickets Nav Buttons
+  // My Passes Buttons
   const myTicketsBtn = document.getElementById('myTicketsBtn');
   if (myTicketsBtn) myTicketsBtn.addEventListener('click', openMyTicketsModal);
 
@@ -1018,7 +1159,6 @@ function initEventListeners() {
   if (mobileToggle && mobileDrawer) {
     mobileToggle.addEventListener('click', () => {
       const isOpen = mobileDrawer.classList.toggle('open');
-      mobileToggle.classList.toggle('open', isOpen);
       mobileToggle.setAttribute('aria-expanded', isOpen);
     });
 
@@ -1029,25 +1169,20 @@ function initEventListeners() {
 
   function closeMobileDrawer() {
     if (mobileDrawer) mobileDrawer.classList.remove('open');
-    if (mobileToggle) {
-      mobileToggle.classList.remove('open');
-      mobileToggle.setAttribute('aria-expanded', 'false');
-    }
   }
 
   // Footer Category Links
   document.querySelectorAll('[data-category-link]').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const cat = link.getAttribute('data-category-link');
-      state.currentCategory = cat;
+      state.currentCategory = link.getAttribute('data-category-link');
       renderCategories();
       renderEvents();
       document.getElementById('events').scrollIntoView({ behavior: 'smooth' });
     });
   });
 
-  // Modal Close Buttons
+  // Modal Dismiss Listeners
   setupModalDismiss('eventDetailsModal', 'closeDetailsModalBtn');
   setupModalDismiss('registrationModal', 'closeRegModalBtn');
   setupModalDismiss('confirmationModal', 'closeConfirmModalBtn');
@@ -1062,7 +1197,7 @@ function initEventListeners() {
   const closeMyTicketsActionBtn = document.getElementById('closeMyTicketsActionBtn');
   if (closeMyTicketsActionBtn) closeMyTicketsActionBtn.addEventListener('click', () => document.getElementById('myTicketsModal').close());
 
-  // Registration Form Synchronizer
+  // Form Synchronizer
   const regSelect = document.getElementById('regSelectedEvent');
   if (regSelect) {
     regSelect.addEventListener('change', (e) => {
@@ -1071,10 +1206,18 @@ function initEventListeners() {
     });
   }
 
-  // Registration Form Submit
+  // Form Submit
   const regForm = document.getElementById('registrationForm');
   if (regForm) {
     regForm.addEventListener('submit', handleRegistrationSubmit);
+    regForm.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('input', () => {
+        const group = input.closest('.field-group');
+        if (group && group.classList.contains('has-error')) {
+          group.classList.remove('has-error');
+        }
+      });
+    });
   }
 
   // Ticket Actions (Print & Calendar)
@@ -1083,21 +1226,8 @@ function initEventListeners() {
 
   const calBtn = document.getElementById('calendarTicketBtn');
   if (calBtn) calBtn.addEventListener('click', addCurrentTicketToCalendar);
-
-  // Modern input interaction validation feedback
-  if (regForm) {
-    regForm.querySelectorAll('input, select, textarea').forEach(input => {
-      input.addEventListener('input', () => {
-        const group = input.closest('.form-group');
-        if (group && group.classList.contains('has-error')) {
-          group.classList.remove('has-error');
-        }
-      });
-    });
-  }
 }
 
-// Light dismiss: closes modal when user clicks backdrop outside container
 function setupModalDismiss(modalId, closeBtnId) {
   const modal = document.getElementById(modalId);
   const closeBtn = document.getElementById(closeBtnId);
